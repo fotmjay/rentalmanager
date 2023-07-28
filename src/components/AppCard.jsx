@@ -1,4 +1,4 @@
-import AppCardTenant from "../components/AppCardTenant";
+import { formatAddress } from "../config/formats";
 
 export default function AppCard(props) {
   //Setting props into appInfo
@@ -6,17 +6,32 @@ export default function AppCard(props) {
   const appInfo = props.appInfo;
 
   // Creating the address tag
-  const formatAddress = `${appInfo.appNumber}-${appInfo.streetNumber} ${appInfo.streetName}`;
+  const formatNumber = formatAddress(appInfo.streetNumber, appInfo.appNumber);
 
   // Creating the tenants list
-  const tenantsList = props.tenants.map((tenant) => (
-    <AppCardTenant key={tenant.objectId} firstName={tenant.firstName} lastName={tenant.lastName} />
-  ));
+  const tenantsListElement = props.tenants.map((tenant) => {
+    const name = `${tenant.firstName} ${tenant.lastName}`;
+    return (
+      <h3
+        onClick={(e) => props.openSpecific(appInfo, tenant, "tenant", e)}
+        className="appCard--name"
+        key={tenant.objectId}
+      >
+        {name}
+      </h3>
+    );
+  });
 
   return (
     <div className="appCard--container">
-      <h3 className="appCard--address">{formatAddress}</h3>
-      {tenantsList}
+      {!appInfo.leased && <h4 className="appCard--forLease">VACANT</h4>}
+      {appInfo.alerts.length > 0 && <h4 className="appCard--alerts">&#10071;</h4>}
+      <h3 className="appCard--address" onClick={(e) => props.openSpecific(appInfo, props.tenants, "address", e)}>
+        {appInfo.streetName}
+        <br />
+        {formatNumber}
+      </h3>
+      {tenantsListElement}
     </div>
   );
 }
