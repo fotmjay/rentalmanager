@@ -25,6 +25,7 @@ export default function SpecificWindow(props) {
 
   const addressInfo = props.address;
   const tenantsInfo = props.tenants;
+  console.log(tenantsInfo);
 
   return (
     <div className="specificWindow--container">

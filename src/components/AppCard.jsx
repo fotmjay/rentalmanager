@@ -12,11 +12,7 @@ export default function AppCard(props) {
   const tenantsListElement = props.tenants.map((tenant) => {
     const name = `${tenant.firstName} ${tenant.lastName}`;
     return (
-      <h3
-        onClick={(e) => props.openSpecific(appInfo, tenant, "tenant", e)}
-        className="appCard--name"
-        key={tenant.objectId}
-      >
+      <h3 onClick={(e) => props.openSpecific(appInfo, tenant, "tenant", e)} className="appCard--name" key={tenant._id}>
         {name}
       </h3>
     );
