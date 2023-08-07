@@ -1,28 +1,38 @@
 import { useState } from "react";
 import { formatAddress } from "../config/formats";
 import { nanoid } from "nanoid";
-import CONSTANTS from "../constants/constants";
+import PhoneField from "./PhoneField";
 
 export default function TenantForm(props) {
   const [confirmation, setConfirmation] = useState("");
-  const [phoneNumbers, setPhoneNumbers] = useState([{ id: nanoid(), type: "", number: "" }]);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     birthDate: "",
     email: "",
-    phoneNumbers: phoneNumbers,
+    phoneNumbers: [{ id: nanoid(), number: "", type: "home" }],
     recommended: true,
     notes: "",
     currentAddress: "",
   });
 
   function handleChange(event) {
-    const { name, value, type } = event.target;
+    const { name, value, type, dataset } = event.target;
     if (type === "checkbox") {
       setFormData((prevData) => ({ ...prevData, [name]: !prevData.recommended }));
-    } else if (name === "phoneNumbers") {
-      console.log(event, name, value);
+    } else if (name === "phoneNumbers" || name === "phoneTypes") {
+      const propName = name === "phoneNumbers" ? "number" : "type";
+      setFormData((prevData) => {
+        const phones = prevData.phoneNumbers.map((element) => {
+          if (element.id === dataset.id) {
+            return { ...prevData.phoneNumbers[dataset.index], [propName]: value };
+          } else {
+            return element;
+          }
+        });
+        prevData = { ...prevData, phoneNumbers: phones };
+        return prevData;
+      });
     } else {
       setFormData((prevData) => ({ ...prevData, [name]: value }));
     }
@@ -62,22 +72,38 @@ export default function TenantForm(props) {
       </>
     );
   }
-  function phoneFields() {
-    const phoneElements = phoneNumbers.map((phone) => (
-      <div className="editWindow--phoneFieldDiv" key={phone.id}>
-        <input onChange={handleChange} value={phone.number} type="text" name="phoneNumbers"></input>
-        <select onChange={handleChange} name="phoneTypes" id="phoneTypes">
-          {CONSTANTS.PHONETYPES.map((type) => (
-            <option key={type} value={type}>
-              {type}
-            </option>
-          ))}
-        </select>
-      </div>
+
+  function managePhoneFields(ope, event) {
+    if (ope === "ADD") {
+      if (formData.phoneNumbers.length > 2) {
+        setConfirmation("Max amount of numbers reached");
+      } else {
+        setFormData((oldData) => {
+          return { ...oldData, phoneNumbers: [...oldData.phoneNumbers, { id: nanoid(), number: "", type: "home" }] };
+        });
+      }
+    } else if (ope === "REMOVE") {
+      setFormData((oldData) => {
+        const phones = oldData.phoneNumbers.filter((phone) => phone.id !== event.target.dataset.id);
+        return { ...oldData, phoneNumbers: phones };
+      });
+    }
+  }
+
+  function generatePhoneFields() {
+    const phoneElements = formData.phoneNumbers.map((phone, index) => (
+      <PhoneField
+        key={phone.id}
+        managePhoneFields={managePhoneFields}
+        dataId={phone.id}
+        dataIndex={index}
+        handleChange={handleChange}
+        value={phone.number}
+        type={phone.type}
+      />
     ));
     return phoneElements;
   }
-
   //   <>
   //         <input
   //           key={phone.id}
@@ -105,8 +131,7 @@ export default function TenantForm(props) {
         <label htmlFor="email">Email:</label>
         <input onChange={handleChange} value={formData.email} type="email" name="email" id="email"></input>
         <br />
-        <label htmlFor="phoneNumbers">Phone numbers:</label>
-        {phoneFields()}
+        {generatePhoneFields()}
         <br />
         <label htmlFor="notes">Notes:</label>
         <input onChange={handleChange} value={formData.notes} type="text" name="notes" id="notes"></input>

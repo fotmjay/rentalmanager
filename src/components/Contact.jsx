@@ -1,5 +1,5 @@
 export default function Contact(props) {
-  const phones = props.tenant.phoneNumber.map((phone, i) => (
+  const phones = props.tenant.phoneNumbers.map((phone, i) => (
     <li key={i} className="specificWindow--contactList">
       {phone.type}: {phone.number}
     </li>
