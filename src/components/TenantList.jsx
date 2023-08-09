@@ -6,7 +6,7 @@ export default function TenantList(props) {
   return (
     <>
       {tenants.map((tenant, i) => (
-        <li key={tenant.objectId} className="specificWindow--TenantList">
+        <li key={tenant._id} className="specificWindow--TenantList">
           <span className="specificWindow--tenantName">
             {tenant.firstName} {tenant.lastName}
           </span>

@@ -46,20 +46,35 @@ form.login--form {
 }
 
 .login--form button {
-  display: block;
+  display: inline-block;
   max-width: 100px;
   text-align: center;
-  margin: 25px auto 0 auto;
+  margin: 25px 5px;
   border: none;
   padding: 10px;
   border-radius: 5px;
-  background-color: rgba(0, 23, 76, 0.8);
-  color: #f5f5f5;
   font-family: Tektur, sans-serif;
+  color: #f5f5f5;
 }
 
-.login--form button:hover {
+.login--submitButton {
+  background-color: rgba(0, 23, 76, 0.8);
+}
+
+button.login--toggleRegisterButton {
+  background-color: rgba(0, 23, 76, 0.2);
+  border: 1px solid rgba(0, 23, 76, 0.8);
+  color: rgb(0, 23, 76);
+  max-width: 200px;
+}
+
+.login--submitButton:hover {
   background-color: rgba(0, 23, 76, 0.5);
+}
+
+.login--toggleRegisterButton:hover {
+  background-color: rgba(0, 23, 76, 0.335);
+  color: #f5f5f5;
 }
 
 .login--error {
@@ -191,7 +206,8 @@ div.specificWindow--container {
   font-size: 14px;
   margin-left: auto;
   margin-right: 10px;
-  padding: 5px;
+  padding: 8px;
+  border: none;
   border-radius: 5px;
   background-color: rgba(0, 23, 76, 0.8);
   color: #f5f5f5;
@@ -200,6 +216,18 @@ div.specificWindow--container {
 
 .appList--edit--button:hover {
   background-color: rgba(0, 23, 76, 0.5);
+}
+
+.appList--logOut--button {
+  display: inline-block;
+  width: fit-content;
+  font-size: 14px;
+  padding: 3px;
+  margin: auto 10px;
+  border-radius: 5px;
+  background-color: rgba(0, 23, 76, 0.8);
+  color: #f5f5f5;
+  font-family: Tektur, sans-serif;
 }
 
 /* SWITCH */
@@ -364,4 +392,26 @@ input#recommended {
 
 .editWindow--phoneFieldDiv {
   display: inline-block;
+}
+
+input#leased {
+  width: 25px;
+}
+
+/* ADDRESS FORM */
+
+#alertTitle {
+  max-width: 75px;
+}
+
+.addressForm--removeSelectedTenant {
+  color: red;
+  font-size: 0.7rem;
+  padding-left: 8px;
+  cursor: pointer;
+}
+
+.addressForm--selectedTenantList {
+  width: 70%;
+  margin: 3px auto;
 }

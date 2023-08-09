@@ -68,6 +68,11 @@ export default function AppartmentList(props) {
     setSortByTenant((oldSort) => !oldSort);
   }
 
+  function logMeOut() {
+    localStorage.removeItem("token");
+    props.logOut("");
+  }
+
   // Creating individual appartment cards
   function createAddressCards() {
     const addressElements = addList.map((app) => {
@@ -104,6 +109,9 @@ export default function AppartmentList(props) {
         <h4 className="appList--sorted--text">{sortByTenant ? "Sort by Street Name" : "Sort by tenants"}</h4>
         <button type="button" className="appList--edit--button" onClick={(e) => openCreateWindow(e)}>
           Add
+        </button>
+        <button type="button" className="appList--logOut--button login--toggleRegisterButton" onClick={logMeOut}>
+          Log Out
         </button>
       </div>
       <section className="appList--section">{sortByTenant ? "" : createAddressCards()}</section>

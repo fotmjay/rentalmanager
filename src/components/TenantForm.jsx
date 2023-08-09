@@ -19,7 +19,7 @@ export default function TenantForm(props) {
   function handleChange(event) {
     const { name, value, type, dataset } = event.target;
     if (type === "checkbox") {
-      setFormData((prevData) => ({ ...prevData, [name]: !prevData.recommended }));
+      setFormData((prevData) => ({ ...prevData, [name]: !prevData[name] }));
     } else if (name === "phoneNumbers" || name === "phoneTypes") {
       const propName = name === "phoneNumbers" ? "number" : "type";
       setFormData((prevData) => {
@@ -104,17 +104,6 @@ export default function TenantForm(props) {
     ));
     return phoneElements;
   }
-  //   <>
-  //         <input
-  //           key={phone.id}
-  //           onChange={handleChange}
-  //           value={phone.number}
-  //           type="text"
-  //           name="phoneNumbers"
-  //           id={i === 0 ? "phoneNumbers" : `phoneNumbers${i}`}
-  //         ></input>
-  //
-  //       </>
 
   return (
     <section>

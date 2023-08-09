@@ -25,7 +25,6 @@ export default function SpecificWindow(props) {
 
   const addressInfo = props.address;
   const tenantsInfo = props.tenants;
-  console.log(tenantsInfo);
 
   return (
     <div className="specificWindow--container">
@@ -41,7 +40,7 @@ export default function SpecificWindow(props) {
         <h1 className="specificWindow--headline">
           {formatName(tenantsInfo.firstName, tenantsInfo.lastName)}
           <br />
-          {tenantsInfo.birthDate}
+          {tenantsInfo.birthDate.toString().slice(0, 10)}
         </h1>
       )}
       <ul className="specificWindow--detailsList">

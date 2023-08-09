@@ -26,6 +26,7 @@ function App() {
       )}
       {loggedIn && (
         <AppartmentList
+          logOut={setLoggedIn}
           token={loggedIn}
           notLogged={notLogged}
           errorMessages={errorMessages}
