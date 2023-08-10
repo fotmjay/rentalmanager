@@ -9,7 +9,6 @@ export default function SortByTenantList(props) {
       addressCache[add._id] = `${formatAddress(add.streetNumber, add.appNumber)} ${add.streetName}`;
     });
     const sorted = [...props.tenantList].toSorted((a, b) => a.lastName.localeCompare(b.lastName));
-    console.log("s: ", sorted);
     return sorted.map((tenant, i) => (
       <TenantCard
         onClick={(e) => props.openSpecific("", tenant, "tenant", e)}
