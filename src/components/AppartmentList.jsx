@@ -43,6 +43,11 @@ export default function AppartmentList(props) {
     refreshData("tenant");
   }, []);
 
+  function refreshAll() {
+    refreshData("address");
+    refreshData("tenant");
+  }
+
   function openSpecificWindow(address, tenants, category, e) {
     e.stopPropagation();
     setSpecWindow({ toggle: true, address: address, tenants: tenants, category: category });
@@ -102,6 +107,9 @@ export default function AppartmentList(props) {
           <span className="slider round"></span>
         </label>
         <h4 className="appList--sorted--text">{sortByTenant ? "Sort by Street Name" : "Sort by tenants"}</h4>
+        <button type="button" className="appList--refresh--button" onClick={refreshAll}>
+          Refresh Data
+        </button>
         <button type="button" className="appList--edit--button" onClick={(e) => openCreateWindow(e)}>
           Add
         </button>

@@ -239,6 +239,11 @@ div.specificWindow--container {
 .appList--sortByTenant--TenantCard {
   display: flex;
   justify-content: space-evenly;
+  cursor: pointer;
+}
+
+.appList--sortByTenant--TenantCard.dark {
+  background: rgba(0, 23, 76, 0.2);
 }
 
 .appList--sortByTenant--TenantCard span {

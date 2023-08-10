@@ -8,9 +8,16 @@ export default function SortByTenantList(props) {
     props.addList.forEach((add) => {
       addressCache[add._id] = `${formatAddress(add.streetNumber, add.appNumber)} ${add.streetName}`;
     });
-    const sorted = props.tenantList.sort((a, b) => b.lastName - a.lastName);
-    return sorted.map((tenant) => (
-      <TenantCard addressCache={addressCache} addressInfo={props.addList} tenantInfo={tenant} />
+    const sorted = [...props.tenantList].toSorted((a, b) => a.lastName.localeCompare(b.lastName));
+    console.log("s: ", sorted);
+    return sorted.map((tenant, i) => (
+      <TenantCard
+        onClick={(e) => props.openSpecific("", tenant, "tenant", e)}
+        key={tenant._id}
+        addressCache={addressCache}
+        tenantInfo={tenant}
+        evenIndex={i % 2 === 0}
+      />
     ));
   }
 
