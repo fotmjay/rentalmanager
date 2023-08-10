@@ -230,6 +230,22 @@ div.specificWindow--container {
   font-family: Tektur, sans-serif;
 }
 
+.appList--sortByTenant--container {
+  width: 80%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.appList--sortByTenant--TenantCard {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.appList--sortByTenant--TenantCard span {
+  display: block;
+  width: 20%;
+}
+
 /* SWITCH */
 
 .switch {

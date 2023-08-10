@@ -3,6 +3,7 @@ import AppCard from "../components/AppCard";
 import SpecificWindow from "../components/SpecificWindow";
 import CreateWindow from "../components/CreateWindow";
 import Logo from "../components/Logo";
+import SortByTenantList from "./SortByTenantList";
 
 export default function AppartmentList(props) {
   const [addList, setAddList] = useState([]);
@@ -81,12 +82,6 @@ export default function AppartmentList(props) {
     return addressElements;
   }
 
-  // function createTenantList() {
-  //   const tenantElements = tenantList.sort((a,b)=>a.lastName-b.lastName)map(tenant => (
-  //     <li key={tenant.id}></li>
-  //   ))
-  // }
-
   return (
     <main className="appList--container">
       <Logo />
@@ -114,7 +109,18 @@ export default function AppartmentList(props) {
           Log Out
         </button>
       </div>
-      <section className="appList--section">{sortByTenant ? "" : createAddressCards()}</section>
+      <section className="appList--section">
+        {sortByTenant ? (
+          <SortByTenantList
+            addList={addList}
+            openSpecific={openSpecificWindow}
+            closeWindow={closeWindow}
+            tenantList={tenantList}
+          />
+        ) : (
+          createAddressCards()
+        )}
+      </section>
     </main>
   );
 }
