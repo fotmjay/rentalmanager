@@ -20,7 +20,7 @@ export default function AppCard(props) {
 
   return (
     <div className="appCard--container">
-      {!appInfo.leased && <h4 className="appCard--forLease">VACANT</h4>}
+      {props.tenants.length === 0 && <h4 className="appCard--forLease">VACANT</h4>}
       {appInfo.alerts.length > 0 && <h4 className="appCard--alerts">&#10071;</h4>}
       <h3 className="appCard--address" onClick={(e) => props.openSpecific(appInfo, props.tenants, "address", e)}>
         {appInfo.streetName}

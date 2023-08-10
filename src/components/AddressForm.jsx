@@ -11,7 +11,6 @@ export default function AddressForm(props) {
     tenantList: [],
     rentPrice: "",
     alerts: [{ title: "", desc: "" }],
-    leased: true,
     notes: "",
   });
 
@@ -127,14 +126,8 @@ export default function AddressForm(props) {
   return (
     <section>
       <form onSubmit={submitAddress} className="editWindow--tenantForm">
-        <label htmlFor="streetName">Street Name:</label>
-        <input
-          onChange={handleChange}
-          value={formData.streetName}
-          type="text"
-          name="streetName"
-          id="streetName"
-        ></input>
+        <label htmlFor="appNumber">App number:</label>
+        <input onChange={handleChange} value={formData.appNumber} type="text" name="appNumber" id="appNumber"></input>
         <br />
         <label htmlFor="streetNumber">Street Number:</label>
         <input
@@ -145,9 +138,16 @@ export default function AddressForm(props) {
           id="streetNumber"
         ></input>
         <br />
-        <label htmlFor="appNumber">App number:</label>
-        <input onChange={handleChange} value={formData.appNumber} type="text" name="appNumber" id="appNumber"></input>
+        <label htmlFor="streetName">Street Name:</label>
+        <input
+          onChange={handleChange}
+          value={formData.streetName}
+          type="text"
+          name="streetName"
+          id="streetName"
+        ></input>
         <br />
+
         <label htmlFor="rentPrice">Rent Price:</label>
         <input onChange={handleChange} value={formData.rentPrice} type="text" name="rentPrice" id="rentPrice"></input>
         <br />
@@ -174,9 +174,6 @@ export default function AddressForm(props) {
             </li>
           ))}
         </ul>
-        <label htmlFor="leased">Leased:</label>
-        <input onChange={handleChange} type="checkbox" checked={formData.leased} name="leased" id="leased"></input>
-        <br />
         <button className="editWindow--submitButton" type="submit">
           Add!
         </button>
