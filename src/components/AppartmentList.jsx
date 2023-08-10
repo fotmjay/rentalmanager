@@ -101,21 +101,25 @@ export default function AppartmentList(props) {
       {createWindow.toggle && (
         <CreateWindow token={props.token} tenantList={tenantList} addressList={addList} closeWindow={closeWindow} />
       )}
-      <div className="appList--sortSwitch--container">
-        <label className="switch">
-          <input onChange={sortTenant} checked={sortByTenant} name="sortByTenant" type="checkbox" />
-          <span className="slider round"></span>
-        </label>
-        <h4 className="appList--sorted--text">{sortByTenant ? "Sort by Street Name" : "Sort by tenants"}</h4>
+      <div className="appList--header--container">
+        <div className="appList--sortSwitch--container">
+          <label className="switch">
+            <input onChange={sortTenant} checked={sortByTenant} name="sortByTenant" type="checkbox" />
+            <span className="slider round"></span>
+          </label>
+          <h4 className="appList--sorted--text">{sortByTenant ? "Sort by Street Name" : "Sort by tenants"}</h4>
+        </div>
         <button type="button" className="appList--refresh--button" onClick={refreshAll}>
           Refresh Data
         </button>
-        <button type="button" className="appList--edit--button" onClick={(e) => openCreateWindow(e)}>
-          Add
-        </button>
-        <button type="button" className="appList--logOut--button login--toggleRegisterButton" onClick={logMeOut}>
-          Log Out
-        </button>
+        <div className="appList--button--container">
+          <button type="button" className="appList--edit--button" onClick={(e) => openCreateWindow(e)}>
+            Add
+          </button>
+          <button type="button" className="appList--logOut--button login--toggleRegisterButton" onClick={logMeOut}>
+            Log Out
+          </button>
+        </div>
       </div>
       <section className="appList--section">
         {sortByTenant ? (
