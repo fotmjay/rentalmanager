@@ -1,5 +1,4 @@
 export default function TenantCard(props) {
-  console.log(props);
   return (
     <li key={props.tenantInfo._id} className="appList--sortByTenant--TenantCard">
       <span>{props.tenantInfo.lastName}</span>
