@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { nanoid } from "nanoid";
 import AlertField from "./AlertField";
+import fetchConfig from "../config/fetch";
+import fetchUrls from "../constants/fetchUrls";
 
 export default function AddressForm(props) {
   const [confirmation, setConfirmation] = useState("");
@@ -48,22 +50,10 @@ export default function AddressForm(props) {
     } else {
       alerts = formData.alerts;
     }
-    const response = await fetch("http://localhost:3000/api/createAddress", {
-      method: "POST", // *GET, POST, PUT, DELETE, etc.
-      headers: { "Content-Type": "application/json", authorization: props.token },
-      mode: "cors",
-      credentials: "same-origin",
-      proxy: "http://localhost:3000",
-      body: JSON.stringify({
-        address: { ...formData, alerts: alerts },
-      }),
-    });
+    const addressData = { ...formData, alerts: alerts };
+    const response = await fetch(fetchUrls.createAddress, fetchConfig.dataCreation(props.token, addressData));
     const res = await response.json();
-    if (res.success) {
-      setConfirmation(res.message);
-    } else {
-      setConfirmation(res.error);
-    }
+    setConfirmation(res.message || res.error);
   }
 
   function generateTenantList() {

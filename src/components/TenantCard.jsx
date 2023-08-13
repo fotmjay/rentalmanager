@@ -4,7 +4,7 @@ export default function TenantCard(props) {
     <li onClick={props.onClick} className={style}>
       <span>{props.tenantInfo.lastName}</span>
       <span>{props.tenantInfo.firstName}</span>
-      <span>{props.addressCache[props.tenantInfo.addressId]}</span>
+      <span className="tenantCard--address">{props.addressCache[props.tenantInfo.addressId]}</span>
     </li>
   );
 }

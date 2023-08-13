@@ -202,6 +202,7 @@ div.specificWindow--container {
 
 .appList--header--container {
   display: flex;
+  margin-top: 10px;
   width: 100%;
   justify-content: space-between;
 }
@@ -258,6 +259,10 @@ div.specificWindow--container {
 .appList--sortByTenant--TenantCard span {
   display: block;
   width: 20%;
+}
+
+.appList--sortByTenant--TenantCard > span.tenantCard--address {
+  width: 60%;
 }
 
 /* SWITCH */

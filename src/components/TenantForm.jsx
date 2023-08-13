@@ -2,6 +2,8 @@ import { useState } from "react";
 import { formatAddress } from "../config/formats";
 import { nanoid } from "nanoid";
 import PhoneField from "./PhoneField";
+import fetchConfig from "../config/fetch";
+import fetchUrls from "../constants/fetchUrls";
 
 export default function TenantForm(props) {
   const [confirmation, setConfirmation] = useState("");
@@ -43,22 +45,9 @@ export default function TenantForm(props) {
     if (formData.currentAddress === "Not my tenant") {
       setFormData((oldData) => ({ ...oldData, currentAddress: "" }));
     }
-    const response = await fetch("http://localhost:3000/api/createTenant", {
-      method: "POST", // *GET, POST, PUT, DELETE, etc.
-      headers: { "Content-Type": "application/json", authorization: props.token },
-      mode: "cors",
-      credentials: "same-origin",
-      proxy: "http://localhost:3000",
-      body: JSON.stringify({
-        tenant: formData,
-      }),
-    });
+    const response = await fetch(fetchUrls.createTenant, fetchConfig.dataCreation(props.token, formData));
     const res = await response.json();
-    if (res.success) {
-      setConfirmation(res.message);
-    } else {
-      setConfirmation(res.error);
-    }
+    setConfirmation(res.message || res.error);
   }
 
   function generateAddressList() {
@@ -121,7 +110,6 @@ export default function TenantForm(props) {
         <input onChange={handleChange} value={formData.email} type="email" name="email" id="email"></input>
         <br />
         {generatePhoneFields()}
-        <br />
         <label htmlFor="notes">Notes:</label>
         <input onChange={handleChange} value={formData.notes} type="text" name="notes" id="notes"></input>
         <br />

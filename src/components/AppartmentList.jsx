@@ -4,6 +4,8 @@ import SpecificWindow from "../components/SpecificWindow";
 import CreateWindow from "../components/CreateWindow";
 import Logo from "../components/Logo";
 import SortByTenantList from "./SortByTenantList";
+import fetchConfig from "../config/fetch";
+import fetchUrls from "../constants/fetchUrls";
 
 export default function AppartmentList(props) {
   const [addList, setAddList] = useState([]);
@@ -14,13 +16,7 @@ export default function AppartmentList(props) {
 
   async function refreshData(type) {
     try {
-      const response = await fetch(`http://localhost:3000/api/${type}`, {
-        headers: { "Content-Type": "application/json", authorization: props.token },
-        method: "GET",
-        mode: "cors",
-        credentials: "same-origin",
-        proxy: "http://localhost:3000",
-      });
+      const response = await fetch(`${fetchUrls.getData}${type}`, fetchConfig.dataRequest(props.token));
       if (response.status === 401) {
         setAddList([]);
         setTenantList([]);
@@ -107,7 +103,7 @@ export default function AppartmentList(props) {
             <input onChange={sortTenant} checked={sortByTenant} name="sortByTenant" type="checkbox" />
             <span className="slider round"></span>
           </label>
-          <h4 className="appList--sorted--text">{sortByTenant ? "Sort by Street Name" : "Sort by tenants"}</h4>
+          <h4 className="appList--sorted--text">{sortByTenant ? "Sort by tenants" : "Sort by Street Name"}</h4>
         </div>
         <button type="button" className="appList--refresh--button" onClick={refreshAll}>
           Refresh Data
