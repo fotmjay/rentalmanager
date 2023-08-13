@@ -28,7 +28,12 @@ export default function SpecificWindow(props) {
 
   return (
     <div className="specificWindow--container">
-      <h2 className="specificWindow--title">Details</h2>
+      <h2 className="specificWindow--title">
+        Details
+        <button className="appList--edit--button" type="button">
+          Edit
+        </button>
+      </h2>
       {props.category === "address" && (
         <h1 className="specificWindow--headline">
           {formatAddress(addressInfo.streetNumber, addressInfo.appNumber)}
