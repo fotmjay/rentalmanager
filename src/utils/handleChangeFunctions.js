@@ -45,18 +45,4 @@ function addressSpecificChanges(setStateFn, propName, value, dataset) {
   });
 }
 
-// function handleChange(event) {}
-
-// function handleChange(event) {
-//   const { name, value, type, dataset } = event.target;
-//   if (type === "checkbox") {
-//     setFormData((prevData) => ({ ...prevData, [name]: !prevData[name] }));
-//   } else if (name === "alertTitle" || name === "alertDescription") {
-//     const propName = name === "alertTitle" ? "title" : "desc";
-//
-//   }
-//   } else {
-//     setFormData((prevData) => ({ ...prevData, [name]: value }));
-//   }
-// }
 export default handleChangeFunctions;
