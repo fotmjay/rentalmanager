@@ -8,10 +8,10 @@ const fetchConfig = {
       proxy: "http://localhost:3000",
     };
   },
-  dataCreation: function (token, formData) {
+  postRequest: function (formData, token) {
     return {
       method: "POST",
-      headers: { "Content-Type": "application/json", authorization: token },
+      headers: { "Content-Type": "application/json", authorization: token || "" },
       mode: "cors",
       credentials: "same-origin",
       proxy: "http://localhost:3000",

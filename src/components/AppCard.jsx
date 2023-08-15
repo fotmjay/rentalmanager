@@ -1,4 +1,4 @@
-import { formatAddress } from "../config/formats";
+import { formatAddress } from "../utils/formats";
 
 export default function AppCard(props) {
   //Setting props into appInfo

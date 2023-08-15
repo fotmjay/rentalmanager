@@ -1,5 +1,5 @@
 import TenantCard from "./TenantCard";
-import { formatAddress } from "../config/formats";
+import { formatAddress } from "../utils/formats";
 import { useEffect } from "react";
 
 export default function SortByTenantList(props) {

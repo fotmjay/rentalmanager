@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { formatAddress } from "../config/formats";
+import { formatAddress } from "../utils/formats";
 import { nanoid } from "nanoid";
 import PhoneField from "./PhoneField";
 import fetchConfig from "../config/fetch";
 import fetchUrls from "../constants/fetchUrls";
+import handleChangeFunctions from "../utils/handleChangeFunctions";
 
 export default function TenantForm(props) {
   const [confirmation, setConfirmation] = useState("");
@@ -18,34 +19,14 @@ export default function TenantForm(props) {
     currentAddress: "",
   });
 
-  function handleChange(event) {
-    const { name, value, type, dataset } = event.target;
-    if (type === "checkbox") {
-      setFormData((prevData) => ({ ...prevData, [name]: !prevData[name] }));
-    } else if (name === "phoneNumbers" || name === "phoneTypes") {
-      const propName = name === "phoneNumbers" ? "number" : "type";
-      setFormData((prevData) => {
-        const phones = prevData.phoneNumbers.map((element) => {
-          if (element.id === dataset.id) {
-            return { ...prevData.phoneNumbers[dataset.index], [propName]: value };
-          } else {
-            return element;
-          }
-        });
-        prevData = { ...prevData, phoneNumbers: phones };
-        return prevData;
-      });
-    } else {
-      setFormData((prevData) => ({ ...prevData, [name]: value }));
-    }
-  }
+  const { handleChange } = handleChangeFunctions;
 
   async function submitTenant(event) {
     event.preventDefault();
     if (formData.currentAddress === "Not my tenant") {
       setFormData((oldData) => ({ ...oldData, currentAddress: "" }));
     }
-    const response = await fetch(fetchUrls.createTenant, fetchConfig.dataCreation(props.token, formData));
+    const response = await fetch(fetchUrls.createTenant, fetchConfig.postRequest(formData, props.token));
     const res = await response.json();
     setConfirmation(res.message || res.error);
   }
@@ -86,7 +67,7 @@ export default function TenantForm(props) {
         managePhoneFields={managePhoneFields}
         dataId={phone.id}
         dataIndex={index}
-        handleChange={handleChange}
+        handleChange={(e) => handleChange(e, setFormData)}
         value={phone.number}
         type={phone.type}
       />
@@ -98,30 +79,65 @@ export default function TenantForm(props) {
     <section>
       <form onSubmit={submitTenant} className="editWindow--tenantForm">
         <label htmlFor="firstName">First Name:</label>
-        <input onChange={handleChange} value={formData.firstName} type="text" name="firstName" id="firstName"></input>
+        <input
+          onChange={(e) => handleChange(e, setFormData)}
+          value={formData.firstName}
+          type="text"
+          name="firstName"
+          id="firstName"
+        ></input>
         <br />
         <label htmlFor="lastName">Last Name:</label>
-        <input onChange={handleChange} value={formData.lastName} type="text" name="lastName" id="lastName"></input>
+        <input
+          onChange={(e) => handleChange(e, setFormData)}
+          value={formData.lastName}
+          type="text"
+          name="lastName"
+          id="lastName"
+        ></input>
         <br />
         <label htmlFor="birthDate">Date of birth:</label>
-        <input onChange={handleChange} value={formData.birthDate} type="text" name="birthDate" id="birthDate"></input>
+        <input
+          onChange={(e) => handleChange(e, setFormData)}
+          value={formData.birthDate}
+          type="text"
+          name="birthDate"
+          id="birthDate"
+        ></input>
         <br />
         <label htmlFor="email">Email:</label>
-        <input onChange={handleChange} value={formData.email} type="email" name="email" id="email"></input>
+        <input
+          onChange={(e) => handleChange(e, setFormData)}
+          value={formData.email}
+          type="email"
+          name="email"
+          id="email"
+        ></input>
         <br />
         {generatePhoneFields()}
         <label htmlFor="notes">Notes:</label>
-        <input onChange={handleChange} value={formData.notes} type="text" name="notes" id="notes"></input>
+        <input
+          onChange={(e) => handleChange(e, setFormData)}
+          value={formData.notes}
+          type="text"
+          name="notes"
+          id="notes"
+        ></input>
         <br />
         <label htmlFor="currentAddress">Current address:</label>
-        <select onChange={handleChange} value={formData.currentAddress} name="currentAddress" id="currentAddress">
+        <select
+          onChange={(e) => handleChange(e, setFormData)}
+          value={formData.currentAddress}
+          name="currentAddress"
+          id="currentAddress"
+        >
           <option value="">Not my tenant</option>
           {generateAddressList()}
         </select>
         <br />
         <label htmlFor="recommended">Recommended:</label>
         <input
-          onChange={handleChange}
+          onChange={(e) => handleChange(e, setFormData)}
           type="checkbox"
           checked={formData.recommended}
           name="recommended"

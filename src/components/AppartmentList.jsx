@@ -16,11 +16,11 @@ export default function AppartmentList(props) {
 
   async function refreshData(type) {
     try {
-      const response = await fetch(`${fetchUrls.getData}${type}`, fetchConfig.dataRequest(props.token));
+      const response = await fetch(`${fetchUrls.getData}/${type}`, fetchConfig.dataRequest(props.token));
       if (response.status === 401) {
         setAddList([]);
         setTenantList([]);
-        props.notLogged(401);
+        props.logOut(401);
       }
       const res = await response.json();
       if (res.success === true) {
@@ -70,11 +70,6 @@ export default function AppartmentList(props) {
     setSortByTenant((oldSort) => !oldSort);
   }
 
-  function logMeOut() {
-    localStorage.removeItem("token");
-    props.logOut("");
-  }
-
   // Creating individual appartment cards
   function createAddressCards() {
     const addressElements = addList.map((app) => {
@@ -112,7 +107,11 @@ export default function AppartmentList(props) {
           <button type="button" className="appList--edit--button" onClick={(e) => openCreateWindow(e)}>
             Add
           </button>
-          <button type="button" className="appList--logOut--button login--toggleRegisterButton" onClick={logMeOut}>
+          <button
+            type="button"
+            className="appList--logOut--button login--toggleRegisterButton"
+            onClick={() => props.logOut(200)}
+          >
             Log Out
           </button>
         </div>

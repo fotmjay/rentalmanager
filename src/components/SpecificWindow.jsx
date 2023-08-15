@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { formatAddress, formatName } from "../config/formats";
+import { formatAddress, formatName } from "../utils/formats";
 import TenantList from "../components/TenantList";
 import RentInfo from "../components/RentInfo";
 import Alerts from "../components/Alerts";

@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { nanoid } from "nanoid";
 import AlertField from "./AlertField";
 import fetchConfig from "../config/fetch";
 import fetchUrls from "../constants/fetchUrls";
+import handleChangeFunctions from "../utils/handleChangeFunctions";
 
 export default function AddressForm(props) {
   const [confirmation, setConfirmation] = useState("");
@@ -18,29 +18,7 @@ export default function AddressForm(props) {
 
   const [selectedTenant, setSelectedTenant] = useState("");
 
-  function handleChange(event) {
-    const { name, value, type, dataset } = event.target;
-    if (type === "checkbox") {
-      setFormData((prevData) => ({ ...prevData, [name]: !prevData[name] }));
-    } else if (name === "alertTitle" || name === "alertDescription") {
-      const propName = name === "alertTitle" ? "title" : "desc";
-      setFormData((prevData) => {
-        const alerts = prevData.alerts.map((element, index) => {
-          if (index === Number(dataset.index)) {
-            return { ...prevData.alerts[dataset.index], [propName]: value };
-          } else {
-            return element;
-          }
-        });
-        prevData = { ...prevData, alerts: alerts };
-        return prevData;
-      });
-    } else if (name === "selectedTenant") {
-      setSelectedTenant(value);
-    } else {
-      setFormData((prevData) => ({ ...prevData, [name]: value }));
-    }
-  }
+  const { handleChange } = handleChangeFunctions;
 
   async function submitAddress(event) {
     event.preventDefault();
@@ -51,7 +29,7 @@ export default function AddressForm(props) {
       alerts = formData.alerts;
     }
     const addressData = { ...formData, alerts: alerts };
-    const response = await fetch(fetchUrls.createAddress, fetchConfig.dataCreation(props.token, addressData));
+    const response = await fetch(fetchUrls.createAddress, fetchConfig.postRequest(addressData, props.token));
     const res = await response.json();
     setConfirmation(res.message || res.error);
   }
@@ -105,7 +83,7 @@ export default function AddressForm(props) {
         key={index}
         manageAlertFields={manageAlertFields}
         dataIndex={index}
-        handleChange={handleChange}
+        setStateFn={setFormData}
         title={alert.title}
         desc={alert.desc}
         type={alert.type}
@@ -117,11 +95,17 @@ export default function AddressForm(props) {
     <section>
       <form onSubmit={submitAddress} className="editWindow--tenantForm">
         <label htmlFor="appNumber">App number:</label>
-        <input onChange={handleChange} value={formData.appNumber} type="text" name="appNumber" id="appNumber"></input>
+        <input
+          onChange={(e) => handleChange(e, setFormData)}
+          value={formData.appNumber}
+          type="text"
+          name="appNumber"
+          id="appNumber"
+        ></input>
         <br />
         <label htmlFor="streetNumber">Street Number:</label>
         <input
-          onChange={handleChange}
+          onChange={(e) => handleChange(e, setFormData)}
           value={formData.streetNumber}
           type="text"
           name="streetNumber"
@@ -130,7 +114,7 @@ export default function AddressForm(props) {
         <br />
         <label htmlFor="streetName">Street Name:</label>
         <input
-          onChange={handleChange}
+          onChange={(e) => handleChange(e, setFormData)}
           value={formData.streetName}
           type="text"
           name="streetName"
@@ -139,14 +123,30 @@ export default function AddressForm(props) {
         <br />
 
         <label htmlFor="rentPrice">Rent Price:</label>
-        <input onChange={handleChange} value={formData.rentPrice} type="text" name="rentPrice" id="rentPrice"></input>
+        <input
+          onChange={(e) => handleChange(e, setFormData)}
+          value={formData.rentPrice}
+          type="text"
+          name="rentPrice"
+          id="rentPrice"
+        ></input>
         <br />
         <label htmlFor="notes">Notes:</label>
-        <input onChange={handleChange} value={formData.notes} type="text" name="notes" id="notes"></input>
+        <input
+          onChange={(e) => handleChange(e, setFormData)}
+          value={formData.notes}
+          type="text"
+          name="notes"
+          id="notes"
+        ></input>
         <br />
         {generateAlertFields()}
         <label htmlFor="currentTenant">Current tenant:</label>
-        <select onChange={handleChange} name="selectedTenant" id="selectedTenant">
+        <select
+          onChange={(e) => handleChange(e, setFormData, setSelectedTenant)}
+          name="selectedTenant"
+          id="selectedTenant"
+        >
           <option value=""></option>
           {generateTenantList()}
         </select>

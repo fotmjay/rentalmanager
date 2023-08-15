@@ -1,13 +1,14 @@
-import { useState } from "react";
+import handleChangeFunctions from "../utils/handleChangeFunctions";
 
 export default function AlertField(props) {
+  const { handleChange } = handleChangeFunctions;
   return (
     <>
       <label htmlFor="alert">{`Alert ${props.dataIndex + 1}:`}</label>
       <div className="editWindow--phoneFieldDiv">
         <input
           data-index={props.dataIndex}
-          onChange={props.handleChange}
+          onChange={(e) => handleChange(e, props.setStateFn)}
           name="alertTitle"
           id="alertTitle"
           value={props.title}
@@ -15,7 +16,7 @@ export default function AlertField(props) {
         ></input>
         <input
           data-index={props.dataIndex}
-          onChange={props.handleChange}
+          onChange={(e) => handleChange(e, props.setStateFn)}
           value={props.desc}
           type="text"
           name="alertDescription"

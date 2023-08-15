@@ -1,4 +1,4 @@
-import Login from "./components/Login";
+import AuthPage from "./components/auth/AuthPage";
 import AppartmentList from "./components/AppartmentList";
 import { useState, useEffect } from "react";
 
@@ -8,8 +8,14 @@ function App() {
 
   function notLogged(code) {
     localStorage.removeItem("token");
-    setErrorMessages([{ message: "401: Unauthorized." }]);
     setLoggedIn("");
+    switch (code) {
+      case 401:
+        setErrorMessages([{ message: "401: Unauthorized." }]);
+        break;
+      default:
+        break;
+    }
   }
 
   useEffect(() => {
@@ -22,13 +28,12 @@ function App() {
   return (
     <div>
       {!loggedIn && (
-        <Login setLoggedIn={setLoggedIn} errorMessages={errorMessages} setErrorMessages={setErrorMessages} />
+        <AuthPage setLoggedIn={setLoggedIn} errorMessages={errorMessages} setErrorMessages={setErrorMessages} />
       )}
       {loggedIn && (
         <AppartmentList
-          logOut={setLoggedIn}
           token={loggedIn}
-          notLogged={notLogged}
+          logOut={notLogged}
           errorMessages={errorMessages}
           setErrorMessages={setErrorMessages}
         />
