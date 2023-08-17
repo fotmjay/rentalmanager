@@ -31,6 +31,7 @@ export default function AddressForm(props) {
     const addressData = { ...formData, alerts: alerts };
     const response = await fetch(fetchUrls.createAddress, fetchConfig.postRequest(addressData, props.token));
     const res = await response.json();
+    localStorage.setItem("token", res.refreshToken);
     setConfirmation(res.message || res.error);
   }
 

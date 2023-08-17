@@ -4,6 +4,22 @@ body {
   font-family: Karla, sans-serif;
 }
 
+.landing--welcome {
+  padding-bottom: 10px;
+}
+
+.landing--paragraph {
+  padding: 20px 25px 0 25px;
+}
+
+.landing--container button {
+  margin-bottom: 25px !important;
+}
+
+.landing--welcome {
+  font-size: 2rem;
+}
+.landing--container,
 .login--container {
   width: 500px;
   margin: auto;

@@ -28,6 +28,7 @@ export default function TenantForm(props) {
     }
     const response = await fetch(fetchUrls.createTenant, fetchConfig.postRequest(formData, props.token));
     const res = await response.json();
+    localStorage.setItem("token", res.refreshToken);
     setConfirmation(res.message || res.error);
   }
 

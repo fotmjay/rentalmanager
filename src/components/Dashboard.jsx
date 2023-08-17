@@ -1,45 +1,60 @@
 import { useState, useEffect } from "react";
-import AppCard from "../components/AppCard";
-import SpecificWindow from "../components/SpecificWindow";
-import CreateWindow from "../components/CreateWindow";
-import Logo from "../components/Logo";
+import AppCard from "./AppCard";
+import SpecificWindow from "./SpecificWindow";
+import CreateWindow from "./CreateWindow";
+import Logo from "./Logo";
 import SortByTenantList from "./SortByTenantList";
 import fetchConfig from "../config/fetch";
 import fetchUrls from "../constants/fetchUrls";
+import { useNavigate } from "react-router-dom";
 
-export default function AppartmentList(props) {
+export default function Dashboard(props) {
   const [addList, setAddList] = useState([]);
   const [tenantList, setTenantList] = useState([]);
   const [sortByTenant, setSortByTenant] = useState(false);
   const [specWindow, setSpecWindow] = useState({ toggle: false, address: "", tenants: "", category: "" });
   const [createWindow, setCreateWindow] = useState({ toggle: false });
+  const [token, setToken] = useState(localStorage.getItem("token") || "");
+  const navigate = useNavigate();
+
+  if (!token) {
+    navigate("/login");
+  }
+
+  useEffect(() => {
+    refreshAll();
+  }, []);
+
+  function logOut() {
+    localStorage.removeItem("token");
+    setToken("");
+    props.setErrorMessages([{ message: "Successfully logged out." }]);
+    navigate("/login");
+  }
 
   async function refreshData(type) {
     try {
-      const response = await fetch(`${fetchUrls.getData}/${type}`, fetchConfig.dataRequest(props.token));
+      const response = await fetch(`${fetchUrls.getData}/${type}`, fetchConfig.dataRequest(token));
       const res = await response.json();
       if (res.success === true) {
-        if (res.refreshToken) {
-          localStorage.setItem("token", res.refreshToken);
-          props.setLoggedIn(res.refreshToken);
-        }
+        localStorage.setItem("token", res.refreshToken);
+        setToken(res.refreshToken);
         if (type === "address") {
           setAddList(res.data);
         } else if (type === "tenant") {
           setTenantList(res.data);
         }
       } else {
-        setAddList([]);
-        setTenantList([]);
-        props.logOut(401, res.error);
+        console.log(res);
+        // setAddList([]);
+        // setTenantList([]);
+        // props.logOut(401, res.error);
+        // navigate("/login");
       }
     } catch (err) {
       console.error(err);
     }
   }
-  useEffect(() => {
-    refreshAll();
-  }, []);
 
   function refreshAll() {
     refreshData("address");
@@ -92,7 +107,7 @@ export default function AppartmentList(props) {
         />
       )}
       {createWindow.toggle && (
-        <CreateWindow token={props.token} tenantList={tenantList} addressList={addList} closeWindow={closeWindow} />
+        <CreateWindow token={token} tenantList={tenantList} addressList={addList} closeWindow={closeWindow} />
       )}
       <div className="appList--header--container">
         <div className="appList--sortSwitch--container">
@@ -109,11 +124,7 @@ export default function AppartmentList(props) {
           <button type="button" className="appList--edit--button" onClick={(e) => openCreateWindow(e)}>
             Add
           </button>
-          <button
-            type="button"
-            className="appList--logOut--button login--toggleRegisterButton"
-            onClick={() => props.logOut(200, "Successfully logged out.")}
-          >
+          <button type="button" className="appList--logOut--button login--toggleRegisterButton" onClick={logOut}>
             Log Out
           </button>
         </div>

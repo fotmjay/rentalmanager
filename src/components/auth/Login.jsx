@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import fetchConfig from "../../config/fetch";
 import fetchUrls from "../../constants/fetchUrls";
 import handleChangeFunctions from "../../utils/handleChangeFunctions";
@@ -6,6 +7,8 @@ import handleChangeFunctions from "../../utils/handleChangeFunctions";
 export default function Login(props) {
   const [formData, setFormData] = useState({ password: "", username: "" });
   const { handleChange } = handleChangeFunctions;
+
+  const navigate = useNavigate();
 
   async function submitForm(event) {
     event.preventDefault();
@@ -18,10 +21,10 @@ export default function Login(props) {
     if (logged.success === true) {
       localStorage.setItem("token", logged.token);
       props.setErrorMessages([]);
-      props.setLoggedIn(logged.token);
+      // props.setLoggedIn(logged.token);
+      navigate("/dashboard");
     } else {
       localStorage.removeItem("token");
-      console.log(logged);
       props.setErrorMessages([{ message: logged.error }]);
     }
   }

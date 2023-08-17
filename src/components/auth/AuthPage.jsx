@@ -4,7 +4,7 @@ import Login from "./Login";
 import Registration from "./Registration";
 
 export default function AuthPage(props) {
-  const [registerForm, setRegisterForm] = useState(false);
+  const [registerForm, setRegisterForm] = useState(props.register);
 
   function toggleRegisterForm() {
     setRegisterForm((toggle) => !toggle);

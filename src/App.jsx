@@ -1,43 +1,36 @@
 import AuthPage from "./components/auth/AuthPage";
-import AppartmentList from "./components/AppartmentList";
+import Dashboard from "./components/Dashboard";
+import LandingPage from "./components/LandingPage";
 import { useState, useEffect } from "react";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState("");
+  // const [loggedIn, setLoggedIn] = useState("");
   const [errorMessages, setErrorMessages] = useState([]);
 
-  function notLogged(code, msg) {
-    localStorage.removeItem("token");
-    setLoggedIn("");
-    if (code === 200) {
-      setErrorMessages([{ message: `${msg}` }]);
-    } else {
-      setErrorMessages([{ message: `${code}: ${msg}` }]);
-    }
-  }
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      setLoggedIn(token);
-    }
-  }, []);
-
   return (
-    <div>
-      {!loggedIn && (
-        <AuthPage setLoggedIn={setLoggedIn} errorMessages={errorMessages} setErrorMessages={setErrorMessages} />
-      )}
-      {loggedIn && (
-        <AppartmentList
-          setLoggedIn={setLoggedIn}
-          token={loggedIn}
-          logOut={notLogged}
-          errorMessages={errorMessages}
-          setErrorMessages={setErrorMessages}
-        />
-      )}
-    </div>
+    <BrowserRouter>
+      <div>
+        <Routes>
+          <Route exact path="/" element={<LandingPage />}></Route>
+          <Route
+            exact
+            path="/login"
+            element={<AuthPage register={false} errorMessages={errorMessages} setErrorMessages={setErrorMessages} />}
+          ></Route>
+          <Route
+            exact
+            path="/register"
+            element={<AuthPage register={true} errorMessages={errorMessages} setErrorMessages={setErrorMessages} />}
+          ></Route>
+          <Route
+            exact
+            path="/dashboard"
+            element={<Dashboard errorMessages={errorMessages} setErrorMessages={setErrorMessages} />}
+          ></Route>
+        </Routes>
+      </div>
+    </BrowserRouter>
   );
 }
 

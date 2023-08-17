@@ -2,10 +2,13 @@ import { useState } from "react";
 import fetchConfig from "../../config/fetch";
 import fetchUrls from "../../constants/fetchUrls";
 import handleChangeFunctions from "../../utils/handleChangeFunctions";
+import { useNavigate } from "react-router-dom";
 
 export default function Registration(props) {
   const [formData, setFormData] = useState({ password: "", username: "", confirmPass: "", email: "" });
   const { handleChange } = handleChangeFunctions;
+
+  const navigate = useNavigate();
 
   async function submitForm(event) {
     event.preventDefault();
@@ -34,7 +37,8 @@ export default function Registration(props) {
       if (register.success === true) {
         localStorage.setItem("token", register.token);
         props.setErrorMessages([]);
-        props.setLoggedIn(register.token);
+        // props.setLoggedIn(register.token);
+        navigate("/dashboard");
       } else {
         localStorage.removeItem("token");
         console.log(register);
