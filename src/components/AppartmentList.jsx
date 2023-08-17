@@ -17,26 +17,29 @@ export default function AppartmentList(props) {
   async function refreshData(type) {
     try {
       const response = await fetch(`${fetchUrls.getData}/${type}`, fetchConfig.dataRequest(props.token));
-      if (response.status === 401) {
-        setAddList([]);
-        setTenantList([]);
-        props.logOut(401);
-      }
       const res = await response.json();
       if (res.success === true) {
+        if (res.refreshToken) {
+          console.log(res);
+          localStorage.setItem("token", res.refreshToken);
+          props.setLoggedIn(res.refreshToken);
+        }
         if (type === "address") {
           setAddList(res.data);
         } else if (type === "tenant") {
           setTenantList(res.data);
         }
+      } else {
+        setAddList([]);
+        setTenantList([]);
+        props.logOut(401, res.error);
       }
     } catch (err) {
       console.error(err);
     }
   }
   useEffect(() => {
-    refreshData("address");
-    refreshData("tenant");
+    refreshAll();
   }, []);
 
   function refreshAll() {

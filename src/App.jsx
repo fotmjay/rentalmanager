@@ -6,16 +6,10 @@ function App() {
   const [loggedIn, setLoggedIn] = useState("");
   const [errorMessages, setErrorMessages] = useState([]);
 
-  function notLogged(code) {
+  function notLogged(code, error) {
     localStorage.removeItem("token");
     setLoggedIn("");
-    switch (code) {
-      case 401:
-        setErrorMessages([{ message: "401: Unauthorized." }]);
-        break;
-      default:
-        break;
-    }
+    setErrorMessages([{ message: `${code}: ${error}` }]);
   }
 
   useEffect(() => {
@@ -32,6 +26,7 @@ function App() {
       )}
       {loggedIn && (
         <AppartmentList
+          setLoggedIn={setLoggedIn}
           token={loggedIn}
           logOut={notLogged}
           errorMessages={errorMessages}
