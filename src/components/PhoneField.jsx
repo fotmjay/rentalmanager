@@ -1,4 +1,3 @@
-import { useState } from "react";
 import CONSTANTS from "../constants/constants";
 
 export default function PhoneField(props) {
