@@ -20,7 +20,6 @@ export default function AppartmentList(props) {
       const res = await response.json();
       if (res.success === true) {
         if (res.refreshToken) {
-          console.log(res);
           localStorage.setItem("token", res.refreshToken);
           props.setLoggedIn(res.refreshToken);
         }
@@ -113,7 +112,7 @@ export default function AppartmentList(props) {
           <button
             type="button"
             className="appList--logOut--button login--toggleRegisterButton"
-            onClick={() => props.logOut(200)}
+            onClick={() => props.logOut(200, "Successfully logged out.")}
           >
             Log Out
           </button>

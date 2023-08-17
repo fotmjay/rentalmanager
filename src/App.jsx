@@ -6,10 +6,14 @@ function App() {
   const [loggedIn, setLoggedIn] = useState("");
   const [errorMessages, setErrorMessages] = useState([]);
 
-  function notLogged(code, error) {
+  function notLogged(code, msg) {
     localStorage.removeItem("token");
     setLoggedIn("");
-    setErrorMessages([{ message: `${code}: ${error}` }]);
+    if (code === 200) {
+      setErrorMessages([{ message: `${msg}` }]);
+    } else {
+      setErrorMessages([{ message: `${code}: ${msg}` }]);
+    }
   }
 
   useEffect(() => {
