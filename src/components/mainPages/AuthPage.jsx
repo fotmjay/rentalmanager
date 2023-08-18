@@ -1,10 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ToggleRegisterButton from "../authComponents/ToggleRegisterButton";
 import Login from "../authComponents/Login";
 import Registration from "../authComponents/Registration";
+import { useNavigate } from "react-router-dom";
 
 export default function AuthPage(props) {
   const [registerForm, setRegisterForm] = useState(props.register);
+
+  const navigate = useNavigate();
+
+  // useEffect(() => {
+  //   if (localStorage.getItem("token")) {
+  //     navigate("/dashboard");
+  //   }
+  // }, []);
 
   function toggleRegisterForm() {
     setRegisterForm((toggle) => !toggle);

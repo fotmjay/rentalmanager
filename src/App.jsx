@@ -1,12 +1,13 @@
 import AuthPage from "./components/mainPages/AuthPage";
 import Dashboard from "./components/mainPages/Dashboard";
 import LandingPage from "./components/mainPages/LandingPage";
-import { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { useState } from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 function App() {
-  // const [loggedIn, setLoggedIn] = useState("");
   const [errorMessages, setErrorMessages] = useState([]);
+
+  const token = localStorage.getItem("token");
 
   return (
     <BrowserRouter>
@@ -16,7 +17,13 @@ function App() {
           <Route
             exact
             path="/login"
-            element={<AuthPage register={false} errorMessages={errorMessages} setErrorMessages={setErrorMessages} />}
+            element={
+              token ? (
+                <Navigate replace to={"/dashboard"} />
+              ) : (
+                <AuthPage register={false} errorMessages={errorMessages} setErrorMessages={setErrorMessages} />
+              )
+            }
           ></Route>
           <Route
             exact
@@ -26,7 +33,13 @@ function App() {
           <Route
             exact
             path="/dashboard"
-            element={<Dashboard errorMessages={errorMessages} setErrorMessages={setErrorMessages} />}
+            element={
+              token ? (
+                <Dashboard errorMessages={errorMessages} setErrorMessages={setErrorMessages} />
+              ) : (
+                <Navigate replace to={"/login"} />
+              )
+            }
           ></Route>
         </Routes>
       </div>

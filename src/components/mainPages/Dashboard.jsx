@@ -17,10 +17,6 @@ export default function Dashboard(props) {
   const [token, setToken] = useState(localStorage.getItem("token") || "");
   const navigate = useNavigate();
 
-  if (!token) {
-    navigate("/login");
-  }
-
   useEffect(() => {
     refreshAll();
   }, []);
@@ -28,8 +24,13 @@ export default function Dashboard(props) {
   function logOut() {
     localStorage.removeItem("token");
     setToken("");
-    props.setErrorMessages([{ message: "Successfully logged out." }]);
-    navigate("/login");
+    if (code) {
+      props.setErrorMessages([{ message: "Please log in." }]);
+      navigate("/login");
+    } else {
+      props.setErrorMessages([{ message: "Successfully logged out." }]);
+      navigate("/");
+    }
   }
 
   async function refreshData(type) {
@@ -45,11 +46,10 @@ export default function Dashboard(props) {
           setTenantList(res.data);
         }
       } else {
-        console.log(res);
-        // setAddList([]);
-        // setTenantList([]);
-        // props.logOut(401, res.error);
-        // navigate("/login");
+        setAddList([]);
+        setTenantList([]);
+        logOut(401);
+        navigate("/login");
       }
     } catch (err) {
       console.error(err);
