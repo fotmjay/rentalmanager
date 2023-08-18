@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import TenantForm from "./TenantForm";
-import AddressForm from "./AddressForm";
+import TenantForm from "./inputForms/TenantForm";
+import AddressForm from "./inputForms/AddressForm";
 
 export default function CreateWindow(props) {
   const { addressList, tenantList, token } = props;

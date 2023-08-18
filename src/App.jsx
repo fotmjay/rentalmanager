@@ -1,6 +1,6 @@
-import AuthPage from "./components/auth/AuthPage";
-import Dashboard from "./components/Dashboard";
-import LandingPage from "./components/LandingPage";
+import AuthPage from "./components/mainPages/AuthPage";
+import Dashboard from "./components/mainPages/Dashboard";
+import LandingPage from "./components/mainPages/LandingPage";
 import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 

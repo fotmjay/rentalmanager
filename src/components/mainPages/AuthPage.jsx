@@ -1,7 +1,7 @@
 import { useState } from "react";
-import ToggleRegisterButton from "./ToggleRegisterButton";
-import Login from "./Login";
-import Registration from "./Registration";
+import ToggleRegisterButton from "../authComponents/ToggleRegisterButton";
+import Login from "../authComponents/Login";
+import Registration from "../authComponents/Registration";
 
 export default function AuthPage(props) {
   const [registerForm, setRegisterForm] = useState(props.register);

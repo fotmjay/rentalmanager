@@ -1,4 +1,4 @@
-import { stringifyPhoneNumber } from "../utils/formats";
+import { stringifyPhoneNumber } from "../../utils/formats";
 
 export default function TenantList(props) {
   const tenants = props.tenants;

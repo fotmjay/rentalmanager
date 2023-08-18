@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { formatAddress } from "../utils/formats";
+import { formatAddress } from "../../utils/formats";
 import { nanoid } from "nanoid";
 import PhoneField from "./PhoneField";
-import fetchConfig from "../config/fetch";
-import fetchUrls from "../constants/fetchUrls";
-import handleChangeFunctions from "../utils/handleChangeFunctions";
+import fetchConfig from "../../config/fetch";
+import fetchUrls from "../../constants/fetchUrls";
+import handleChangeFunctions from "../../utils/handleChangeFunctions";
 
 export default function TenantForm(props) {
   const [confirmation, setConfirmation] = useState("");

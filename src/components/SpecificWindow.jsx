@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { formatAddress, formatName } from "../utils/formats";
-import TenantList from "../components/TenantList";
-import RentInfo from "../components/RentInfo";
-import Alerts from "../components/Alerts";
-import Notes from "../components/Notes";
-import Contact from "../components/Contact";
+import TenantList from "./specificWindowComponents/TenantList";
+import RentInfo from "./specificWindowComponents/RentInfo";
+import Alerts from "./specificWindowComponents/Alerts";
+import Notes from "./specificWindowComponents/Notes";
+import Contact from "./specificWindowComponents/Contact";
 
 export default function SpecificWindow(props) {
   // When specific window is open, set event listener to body

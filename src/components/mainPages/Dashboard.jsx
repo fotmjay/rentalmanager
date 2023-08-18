@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import AppCard from "./AppCard";
-import SpecificWindow from "./SpecificWindow";
-import CreateWindow from "./CreateWindow";
-import Logo from "./Logo";
-import SortByTenantList from "./SortByTenantList";
-import fetchConfig from "../config/fetch";
-import fetchUrls from "../constants/fetchUrls";
+import AppCard from "../dashboardComponents/AppCard";
+import SpecificWindow from "../SpecificWindow";
+import CreateWindow from "../CreateWindow";
+import Logo from "../dashboardComponents/Logo";
+import SortByTenantList from "../dashboardComponents/SortByTenantList";
+import fetchConfig from "../../config/fetch";
+import fetchUrls from "../../constants/fetchUrls";
 import { useNavigate } from "react-router-dom";
 
 export default function Dashboard(props) {

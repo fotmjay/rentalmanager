@@ -1,5 +1,5 @@
-import TenantCard from "./TenantCard";
-import { formatAddress } from "../utils/formats";
+import TenantCard from "../TenantCard";
+import { formatAddress } from "../../utils/formats";
 
 export default function SortByTenantList(props) {
   function generateTenantCards() {

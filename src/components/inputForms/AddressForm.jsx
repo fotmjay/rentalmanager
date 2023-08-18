@@ -1,8 +1,8 @@
 import { useState } from "react";
 import AlertField from "./AlertField";
-import fetchConfig from "../config/fetch";
-import fetchUrls from "../constants/fetchUrls";
-import handleChangeFunctions from "../utils/handleChangeFunctions";
+import fetchConfig from "../../config/fetch";
+import fetchUrls from "../../constants/fetchUrls";
+import handleChangeFunctions from "../../utils/handleChangeFunctions";
 
 export default function AddressForm(props) {
   const [confirmation, setConfirmation] = useState("");

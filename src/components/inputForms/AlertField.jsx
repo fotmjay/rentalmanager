@@ -1,4 +1,4 @@
-import handleChangeFunctions from "../utils/handleChangeFunctions";
+import handleChangeFunctions from "../../utils/handleChangeFunctions";
 
 export default function AlertField(props) {
   const { handleChange } = handleChangeFunctions;
