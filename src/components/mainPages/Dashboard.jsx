@@ -21,7 +21,7 @@ export default function Dashboard(props) {
     refreshAll();
   }, []);
 
-  function logOut() {
+  function logOut(code) {
     localStorage.removeItem("token");
     setToken("");
     if (code) {
@@ -100,10 +100,13 @@ export default function Dashboard(props) {
       <Logo />
       {specWindow.toggle && (
         <SpecificWindow
+          token={token}
           tenants={specWindow.tenants}
           address={specWindow.address}
           category={specWindow.category}
           closeWindow={closeWindow}
+          tenantList={tenantList}
+          addList={addList}
         />
       )}
       {createWindow.toggle && (

@@ -1,12 +1,18 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { formatAddress, formatName } from "../utils/formats";
 import TenantList from "./specificWindowComponents/TenantList";
 import RentInfo from "./specificWindowComponents/RentInfo";
 import Alerts from "./specificWindowComponents/Alerts";
 import Notes from "./specificWindowComponents/Notes";
 import Contact from "./specificWindowComponents/Contact";
+import SpecificWindowDetails from "./SpecificWindowDetails";
+import SpecificWindowEdit from "./SpecificWindowEdit";
 
 export default function SpecificWindow(props) {
+  const [toggleEdit, setToggleEdit] = useState(false);
+
+  const { tenants, address, category, closeWindow, token, tenantList, addList } = props;
+
   // When specific window is open, set event listener to body
   // Leads to function that confirms:  Specific window clicked === do not close
   // anywhere else:  close
@@ -23,47 +29,37 @@ export default function SpecificWindow(props) {
     };
   }, []);
 
-  const addressInfo = props.address;
-  const tenantsInfo = props.tenants;
+  function editButton() {
+    setToggleEdit((prev) => !prev);
+  }
 
   return (
     <div className="specificWindow--container">
       <h2 className="specificWindow--title">
         Details
-        <button className="appList--edit--button" type="button">
-          Edit
+        <button onClick={editButton} className="appList--edit--button" type="button">
+          {toggleEdit ? "Cancel" : "Edit"}
         </button>
       </h2>
-      {props.category === "address" && (
-        <h1 className="specificWindow--headline">
-          {formatAddress(addressInfo.streetNumber, addressInfo.appNumber)}
-          <br />
-          {addressInfo.streetName}
-        </h1>
+      {toggleEdit ? (
+        <SpecificWindowEdit
+          token={token}
+          tenants={tenants}
+          address={address}
+          category={category}
+          closeWindow={closeWindow}
+          tenantList={tenantList}
+          addressList={addList}
+        />
+      ) : (
+        <SpecificWindowDetails
+          token={token}
+          tenants={tenants}
+          address={address}
+          category={category}
+          closeWindow={closeWindow}
+        />
       )}
-      {props.category === "tenant" && (
-        <h1 className="specificWindow--headline">
-          {formatName(tenantsInfo.firstName, tenantsInfo.lastName)}
-          <br />
-          {tenantsInfo.birthDate.toString().slice(0, 10)}
-        </h1>
-      )}
-      <ul className="specificWindow--detailsList">
-        {props.category === "address" && (
-          <>
-            <TenantList tenants={tenantsInfo} />
-            <Alerts address={addressInfo} />
-            <RentInfo address={addressInfo} />
-          </>
-        )}
-        {props.category === "tenant" && (
-          <>
-            <Contact tenant={tenantsInfo} />
-          </>
-        )}
-
-        <Notes notes={props.category === "address" ? addressInfo.notes : tenantsInfo.notes} />
-      </ul>
     </div>
   );
 }

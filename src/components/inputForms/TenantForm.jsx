@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { formatAddress } from "../../utils/formats";
 import { nanoid } from "nanoid";
 import PhoneField from "./PhoneField";
@@ -16,15 +16,25 @@ export default function TenantForm(props) {
     phoneNumbers: [{ id: nanoid(), number: "", type: "home" }],
     recommended: true,
     notes: "",
-    currentAddress: "",
+    addressId: "",
   });
+  const [editId, setEditId] = useState("");
 
   const { handleChange } = handleChangeFunctions;
 
+  useEffect(() => {
+    if (props.editMode) {
+      props.tenant.birthDate = props.tenant.birthDate.slice(0, 10);
+      console.log(props.tenant);
+      setFormData(props.tenant);
+      setEditId(props.tenant._id);
+    }
+  }, [props.editMode]);
+
   async function submitTenant(event) {
     event.preventDefault();
-    if (formData.currentAddress === "Not my tenant") {
-      setFormData((oldData) => ({ ...oldData, currentAddress: "" }));
+    if (formData.addressId === "Not my tenant") {
+      setFormData((oldData) => ({ ...oldData, addressId: "" }));
     }
     const response = await fetch(fetchUrls.createTenant, fetchConfig.postRequest(formData, props.token));
     const res = await response.json();
@@ -128,8 +138,8 @@ export default function TenantForm(props) {
         <label htmlFor="currentAddress">Current address:</label>
         <select
           onChange={(e) => handleChange(e, setFormData)}
-          value={formData.currentAddress}
-          name="currentAddress"
+          value={formData.addressId}
+          name="addressId"
           id="currentAddress"
         >
           <option value="">Not my tenant</option>
@@ -146,7 +156,7 @@ export default function TenantForm(props) {
         ></input>
         <br />
         <button className="editWindow--submitButton" type="submit">
-          Add!
+          {props.editMode ? "Update" : "Add!"}
         </button>
       </form>
       {confirmation && confirmation}
