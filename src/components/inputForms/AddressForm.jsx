@@ -34,7 +34,6 @@ export default function AddressForm(props) {
           }
         }
       }
-      console.log(address);
       setFormData(address);
     }
   }, [props.editMode]);
