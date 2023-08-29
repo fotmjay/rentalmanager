@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AlertField from "./AlertField";
 import fetchConfig from "../../config/fetch";
 import fetchUrls from "../../constants/fetchUrls";
@@ -19,6 +19,20 @@ export default function AddressForm(props) {
   const [selectedTenant, setSelectedTenant] = useState("");
 
   const { handleChange } = handleChangeFunctions;
+
+  useEffect(() => {
+    if (props.editMode) {
+      const address = {};
+      for (let key in props.address) {
+        if (props.address[key] === null) {
+          address[key] = "";
+        } else {
+          address[key] = props.address[key];
+        }
+      }
+      setFormData(address);
+    }
+  }, [props.editMode]);
 
   async function submitAddress(event) {
     event.preventDefault();

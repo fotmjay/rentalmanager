@@ -23,8 +23,17 @@ export default function TenantForm(props) {
 
   useEffect(() => {
     if (props.editMode) {
-      props.tenant.birthDate = props.tenant.birthDate.slice(0, 10);
-      setFormData(props.tenant);
+      const tenant = {};
+      for (let key in props.tenant) {
+        if (props.tenant[key] === null) {
+          tenant[key] = "";
+        } else if (key === "birthDate") {
+          tenant[key] = props.tenant.birthDate.slice(0, 10);
+        } else {
+          tenant[key] = props.tenant[key];
+        }
+      }
+      setFormData(tenant);
     }
   }, [props.editMode]);
 

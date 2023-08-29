@@ -39,7 +39,7 @@ export default function SpecificWindowDetails(props) {
         <h1 className="specificWindow--headline">
           {formatName(tenantsInfo.firstName, tenantsInfo.lastName)}
           <br />
-          {tenantsInfo.birthDate.toString().slice(0, 10)}
+          {tenantsInfo.birthDate ? tenantsInfo.birthDate.toString().slice(0, 10) : ""}
         </h1>
       )}
       <ul className="specificWindow--detailsList">
