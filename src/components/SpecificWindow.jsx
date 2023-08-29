@@ -38,7 +38,7 @@ export default function SpecificWindow(props) {
       <h2 className="specificWindow--title">
         Details
         <button onClick={editButton} className="appList--edit--button" type="button">
-          {toggleEdit ? "Cancel" : "Edit"}
+          {toggleEdit ? "Go back" : "Edit"}
         </button>
       </h2>
       {toggleEdit ? (
@@ -50,6 +50,7 @@ export default function SpecificWindow(props) {
           closeWindow={closeWindow}
           tenantList={tenantList}
           addressList={addList}
+          editToggle={editButton}
         />
       ) : (
         <SpecificWindowDetails

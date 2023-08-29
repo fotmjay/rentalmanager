@@ -4,12 +4,16 @@ import TenantForm from "./inputForms/TenantForm";
 import AddressForm from "./inputForms/AddressForm";
 
 export default function SpecificWindowEdit(props) {
-  console.log(props);
-
   if (props.category === "tenant") {
     return (
       <div className="editWindow--formContainer">
-        <TenantForm token={props.token} addressList={props.addressList} editMode={true} tenant={props.tenants} />
+        <TenantForm
+          editToggle={props.editToggle}
+          token={props.token}
+          addressList={props.addressList}
+          editMode={true}
+          tenant={props.tenants}
+        />
       </div>
     );
   } else {
@@ -20,7 +24,3 @@ export default function SpecificWindowEdit(props) {
     );
   }
 }
-
-// <TenantForm token={token} addressList={addressList} />
-// ) : (
-//   <AddressForm token={token} tenantList={tenantList} />

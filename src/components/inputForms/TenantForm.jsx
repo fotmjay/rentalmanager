@@ -18,16 +18,13 @@ export default function TenantForm(props) {
     notes: "",
     addressId: "",
   });
-  const [editId, setEditId] = useState("");
 
   const { handleChange } = handleChangeFunctions;
 
   useEffect(() => {
     if (props.editMode) {
       props.tenant.birthDate = props.tenant.birthDate.slice(0, 10);
-      console.log(props.tenant);
       setFormData(props.tenant);
-      setEditId(props.tenant._id);
     }
   }, [props.editMode]);
 
@@ -36,10 +33,20 @@ export default function TenantForm(props) {
     if (formData.addressId === "Not my tenant") {
       setFormData((oldData) => ({ ...oldData, addressId: "" }));
     }
-    const response = await fetch(fetchUrls.createTenant, fetchConfig.postRequest(formData, props.token));
-    const res = await response.json();
-    localStorage.setItem("token", res.refreshToken);
-    setConfirmation(res.message || res.error);
+    if (props.editMode) {
+      const response = await fetch(
+        `${fetchUrls.editTenant}${props.tenant._id}`,
+        fetchConfig.updateRequest(formData, props.token)
+      );
+      const res = await response.json();
+      localStorage.setItem("token", res.refreshToken);
+      setConfirmation(res.message || res.error);
+    } else {
+      const response = await fetch(fetchUrls.createTenant, fetchConfig.postRequest(formData, props.token));
+      const res = await response.json();
+      localStorage.setItem("token", res.refreshToken);
+      setConfirmation(res.message || res.error);
+    }
   }
 
   function generateAddressList() {

@@ -20,6 +20,18 @@ const fetchConfig = {
       }),
     };
   },
+  updateRequest: function (formData, token) {
+    return {
+      method: "PUT",
+      headers: { "Content-Type": "application/json", authorization: token || "" },
+      mode: "cors",
+      credentials: "same-origin",
+      proxy: "http://localhost:3000",
+      body: JSON.stringify({
+        data: formData,
+      }),
+    };
+  },
 };
 
 export default fetchConfig;
