@@ -24,12 +24,17 @@ export default function AddressForm(props) {
     if (props.editMode) {
       const address = {};
       for (let key in props.address) {
-        if (props.address[key] === null) {
+        if (props.address[key] === null && key !== "alerts") {
           address[key] = "";
         } else {
-          address[key] = props.address[key];
+          if (key === "alerts" && props.address[key].length === 0) {
+            address[key] = [{ title: "", desc: "" }];
+          } else {
+            address[key] = props.address[key];
+          }
         }
       }
+      console.log(address);
       setFormData(address);
     }
   }, [props.editMode]);
@@ -43,10 +48,20 @@ export default function AddressForm(props) {
       alerts = formData.alerts;
     }
     const addressData = { ...formData, alerts: alerts };
-    const response = await fetch(fetchUrls.createAddress, fetchConfig.postRequest(addressData, props.token));
-    const res = await response.json();
-    localStorage.setItem("token", res.refreshToken);
-    setConfirmation(res.message || res.error);
+    if (props.editMode) {
+      const response = await fetch(
+        `${fetchUrls.editAddress}${props.address._id}`,
+        fetchConfig.updateRequest(formData, props.token)
+      );
+      const res = await response.json();
+      localStorage.setItem("token", res.refreshToken);
+      setConfirmation(res.message || res.error);
+    } else {
+      const response = await fetch(fetchUrls.createAddress, fetchConfig.postRequest(addressData, props.token));
+      const res = await response.json();
+      localStorage.setItem("token", res.refreshToken);
+      setConfirmation(res.message || res.error);
+    }
   }
 
   function generateTenantList() {
