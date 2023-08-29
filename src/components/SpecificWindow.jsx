@@ -50,7 +50,6 @@ export default function SpecificWindow(props) {
           closeWindow={closeWindow}
           tenantList={tenantList}
           addressList={addList}
-          editToggle={editButton}
         />
       ) : (
         <SpecificWindowDetails

@@ -7,13 +7,7 @@ export default function SpecificWindowEdit(props) {
   if (props.category === "tenant") {
     return (
       <div className="editWindow--formContainer">
-        <TenantForm
-          editToggle={props.editToggle}
-          token={props.token}
-          addressList={props.addressList}
-          editMode={true}
-          tenant={props.tenants}
-        />
+        <TenantForm token={props.token} addressList={props.addressList} editMode={true} tenant={props.tenants} />
       </div>
     );
   } else {
