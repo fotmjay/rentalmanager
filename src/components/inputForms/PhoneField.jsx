@@ -12,6 +12,7 @@ export default function PhoneField(props) {
           value={props.value}
           type="text"
           name="phoneNumbers"
+          placeholder="000-000-0000"
         ></input>
         <select
           data-id={props.dataId}

@@ -130,6 +130,7 @@ export default function TenantForm(props) {
           type="text"
           name="birthDate"
           id="birthDate"
+          placeholder="AAAA-MM-DD"
         ></input>
         <br />
         <label htmlFor="email">Email:</label>
@@ -139,6 +140,7 @@ export default function TenantForm(props) {
           type="email"
           name="email"
           id="email"
+          placeholder="email@email.com"
         ></input>
         <br />
         {generatePhoneFields()}
