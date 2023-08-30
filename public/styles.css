@@ -472,3 +472,15 @@ input#leased {
   width: 70%;
   margin: 3px auto;
 }
+
+/* CONFIRMATION MESSAGES */
+
+.editWindow--confirmation {
+  display: block;
+  padding: 5px 10px;
+  width: 100%;
+}
+
+.editWindow--confirmation.error {
+  color: red;
+}

@@ -67,9 +67,9 @@ export default function AddressForm(props) {
     return (
       <>
         {props.tenantList.map((tenant) => (
-          <option key={tenant._id} value={tenant._id}>{`${tenant.firstName} ${tenant.lastName} ${tenant.birthDate
-            .toString()
-            .slice(0, 10)}`}</option>
+          <option key={tenant._id} value={tenant._id}>{`${tenant.firstName} ${tenant.lastName} ${
+            tenant.birthDate ? tenant.birthDate.toString().slice(0, 10) : ""
+          }`}</option>
         ))}
       </>
     );

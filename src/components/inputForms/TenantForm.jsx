@@ -48,13 +48,17 @@ export default function TenantForm(props) {
         fetchConfig.updateRequest(formData, props.token)
       );
       const res = await response.json();
-      localStorage.setItem("token", res.refreshToken);
+      if (res.refreshToken) {
+        localStorage.setItem("token", res.refreshToken);
+      }
       setConfirmation(res.message || res.error);
     } else {
       const response = await fetch(fetchUrls.createTenant, fetchConfig.postRequest(formData, props.token));
       const res = await response.json();
-      localStorage.setItem("token", res.refreshToken);
-      setConfirmation(res.message || res.error);
+      if (res.refreshToken) {
+        localStorage.setItem("token", res.refreshToken);
+      }
+      setConfirmation(res);
     }
   }
 
@@ -100,6 +104,25 @@ export default function TenantForm(props) {
       />
     ));
     return phoneElements;
+  }
+
+  function createConfirmationMessage() {
+    let className = "editWindow--confirmation ";
+    console.log(confirmation);
+    if (confirmation.success === false) {
+      className += "error";
+      if (Array.isArray(confirmation.error)) {
+        return confirmation.error.map((el, i) => (
+          <span key={i} className={className}>
+            {el.error}
+          </span>
+        ));
+      } else {
+        return <span className={className}>{confirmation.error}</span>;
+      }
+    } else {
+      return <span className={className}>{confirmation.message}</span>;
+    }
   }
 
   return (
@@ -177,7 +200,7 @@ export default function TenantForm(props) {
           {props.editMode ? "Update" : "Add!"}
         </button>
       </form>
-      {confirmation && confirmation}
+      {createConfirmationMessage()}
     </section>
   );
 }
