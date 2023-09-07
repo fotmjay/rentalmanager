@@ -2,7 +2,7 @@ import AuthPage from "./components/mainPages/AuthPage";
 import Dashboard from "./components/mainPages/Dashboard";
 import LandingPage from "./components/mainPages/LandingPage";
 import { useState } from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { HashRouter, BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 function App() {
   const [errorMessages, setErrorMessages] = useState([]);
@@ -10,7 +10,7 @@ function App() {
   const token = localStorage.getItem("token");
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <div>
         <Routes>
           <Route exact path="/" element={<LandingPage />}></Route>
@@ -43,7 +43,7 @@ function App() {
           ></Route>
         </Routes>
       </div>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
