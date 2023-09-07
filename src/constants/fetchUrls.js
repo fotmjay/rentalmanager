@@ -1,11 +1,11 @@
 const fetchUrls = {
-  register: "http://localhost:3000/register",
-  login: "http://localhost:3000/login",
-  getData: "http://localhost:3000/api",
-  createTenant: "http://localhost:3000/api/createTenant",
-  createAddress: "http://localhost:3000/api/createAddress",
-  editTenant: "http://localhost:3000/api/edit/tenant/",
-  editAddress: "http://localhost:3000/api/edit/address/",
+  register: "https://rentalbackend.onrender.com/register",
+  login: "https://rentalbackend.onrender.com/login",
+  getData: "https://rentalbackend.onrender.com/api",
+  createTenant: "https://rentalbackend.onrender.com/api/createTenant",
+  createAddress: "https://rentalbackend.onrender.com/api/createAddress",
+  editTenant: "https://rentalbackend.onrender.com/api/edit/tenant/",
+  editAddress: "https://rentalbackend.onrender.com/api/edit/address/",
 };
 
 export default fetchUrls;

@@ -5,7 +5,6 @@ const fetchConfig = {
       method: "GET",
       mode: "cors",
       credentials: "same-origin",
-      proxy: "http://localhost:3000",
     };
   },
   postRequest: function (formData, token) {
@@ -14,7 +13,6 @@ const fetchConfig = {
       headers: { "Content-Type": "application/json", authorization: token || "" },
       mode: "cors",
       credentials: "same-origin",
-      proxy: "http://localhost:3000",
       body: JSON.stringify({
         data: formData,
       }),
@@ -26,7 +24,6 @@ const fetchConfig = {
       headers: { "Content-Type": "application/json", authorization: token || "" },
       mode: "cors",
       credentials: "same-origin",
-      proxy: "http://localhost:3000",
       body: JSON.stringify({
         data: formData,
       }),
