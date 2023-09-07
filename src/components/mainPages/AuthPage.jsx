@@ -9,14 +9,15 @@ export default function AuthPage(props) {
 
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   if (localStorage.getItem("token")) {
-  //     navigate("/dashboard");
-  //   }
-  // }, []);
-
   function toggleRegisterForm() {
-    setRegisterForm((toggle) => !toggle);
+    setRegisterForm((toggle) => {
+      if (toggle) {
+        navigate("/login");
+      } else {
+        navigate("/register");
+      }
+      return !toggle;
+    });
   }
 
   function toggleButtonElement() {
