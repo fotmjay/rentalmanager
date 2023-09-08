@@ -3,6 +3,7 @@ import fetchConfig from "../../config/fetch";
 import fetchUrls from "../../constants/fetchUrls";
 import handleChangeFunctions from "../../utils/handleChangeFunctions";
 import { useNavigate } from "react-router-dom";
+import validation from "../../utils/validation";
 
 export default function Registration(props) {
   const [formData, setFormData] = useState({ password: "", username: "", confirmPass: "", email: "" });
@@ -13,18 +14,11 @@ export default function Registration(props) {
   async function submitForm(event) {
     event.preventDefault();
     const validationErrors = [];
-    if (formData.username.length < 5) {
-      validationErrors.push({ message: "Username needs to be at least 6 characters." });
-    }
-    if (formData.password.length < 8) {
-      validationErrors.push({ message: "Password needs to be at least 8 characters." });
-    }
-    if (formData.password !== formData.confirmPass || formData.password === "") {
-      validationErrors.push({ message: "Passwords do not match." });
-    }
+    validation.register(formData, validationErrors);
     if (validationErrors.length > 0) {
       props.setErrorMessages(validationErrors);
     } else {
+      console.log("pinged");
       register();
     }
   }

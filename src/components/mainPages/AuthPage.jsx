@@ -16,6 +16,7 @@ export default function AuthPage(props) {
       } else {
         navigate("/register");
       }
+      props.setErrorMessages([]);
       return !toggle;
     });
   }
