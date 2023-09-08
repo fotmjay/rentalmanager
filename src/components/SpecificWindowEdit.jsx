@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-import SpecificWindowDetails from "./SpecificWindowDetails";
 import TenantForm from "./inputForms/TenantForm";
 import AddressForm from "./inputForms/AddressForm";
 
