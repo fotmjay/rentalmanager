@@ -9,14 +9,20 @@ export default function AppCard(props) {
   const formatNumber = formatAddress(appInfo.streetNumber, appInfo.appNumber);
 
   // Creating the tenants list
-  const tenantsListElement = props.tenants.map((tenant) => {
-    const name = `${tenant.firstName} ${tenant.lastName}`;
-    return (
-      <h3 onClick={(e) => props.openSpecific(appInfo, tenant, "tenant", e)} className="appCard--name" key={tenant._id}>
-        {name}
-      </h3>
-    );
-  });
+  function generateTenantListElement() {
+    return props.tenants.map((tenant) => {
+      const name = `${tenant.firstName} ${tenant.lastName}`;
+      return (
+        <h3
+          onClick={(e) => props.openSpecific(appInfo, tenant, "tenant", e)}
+          className="appCard--name"
+          key={tenant._id}
+        >
+          {name}
+        </h3>
+      );
+    });
+  }
 
   return (
     <div className="appCard--container">
@@ -27,7 +33,7 @@ export default function AppCard(props) {
         <br />
         {formatNumber}
       </h3>
-      {tenantsListElement}
+      {generateTenantListElement()}
     </div>
   );
 }
