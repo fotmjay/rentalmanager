@@ -1,7 +1,32 @@
 body {
   background-color: rgba(0, 23, 76, 0.8);
-  padding: 50px;
+  padding: 0;
   font-family: Karla, sans-serif;
+}
+
+#root {
+  width: 100%;
+}
+
+.first--container {
+  margin: 50px;
+}
+
+.warningBanner {
+  padding: 0;
+  width: 100%;
+  background-color: red;
+  height: 25px;
+  line-height: 25px;
+  position: static;
+  top: 0;
+  z-index: 999;
+}
+
+.warningBannerText {
+  padding: 0;
+  color: white;
+  text-align: center;
 }
 
 .landing--welcome {
@@ -13,7 +38,7 @@ body {
 }
 
 .landing--container button {
-  margin-bottom: 25px !important;
+  margin: 25px !important;
 }
 
 .landing--welcome {
@@ -197,7 +222,7 @@ div.specificWindow--container {
   border-radius: 10px;
   background-color: #f5f5f5;
   padding: 25px;
-  margin: 50px auto;
+  margin: 75px auto 50px auto;
   position: relative;
 }
 

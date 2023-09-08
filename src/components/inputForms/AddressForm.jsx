@@ -194,7 +194,7 @@ export default function AddressForm(props) {
           ))}
         </ul>
         <button className="editWindow--submitButton" type="submit">
-          Add!
+          {props.editMode ? "Update" : "Add"}
         </button>
       </form>
       {confirmation && confirmation}

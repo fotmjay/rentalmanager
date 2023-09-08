@@ -1,6 +1,7 @@
 import AuthPage from "./components/mainPages/AuthPage";
 import Dashboard from "./components/mainPages/Dashboard";
 import LandingPage from "./components/mainPages/LandingPage";
+import WarningBanner from "./components/WarningBanner";
 import { useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
@@ -11,7 +12,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <div>
+      <div className="first--container">
         <Routes>
           <Route exact path="/" element={<LandingPage />}></Route>
           <Route

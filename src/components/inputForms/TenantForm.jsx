@@ -196,7 +196,7 @@ export default function TenantForm(props) {
         ></input>
         <br />
         <button className="editWindow--submitButton" type="submit">
-          {props.editMode ? "Update" : "Add!"}
+          {props.editMode ? "Update" : "Add"}
         </button>
       </form>
       {createConfirmationMessage()}
