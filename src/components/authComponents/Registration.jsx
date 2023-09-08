@@ -41,7 +41,6 @@ export default function Registration(props) {
         navigate("/dashboard");
       } else {
         localStorage.removeItem("token");
-        console.log(register);
         if (Array.isArray(register.error)) {
           const errors = register.error.map((err) => {
             return {
@@ -54,7 +53,6 @@ export default function Registration(props) {
         }
       }
     } catch (err) {
-      console.log("err:", err);
       props.setErrorMessages([{ message: err.error }]);
     }
   }

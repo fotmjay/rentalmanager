@@ -108,7 +108,6 @@ export default function TenantForm(props) {
 
   function createConfirmationMessage() {
     let className = "editWindow--confirmation ";
-    console.log(confirmation);
     if (confirmation.success === false) {
       className += "error";
       if (Array.isArray(confirmation.error)) {
