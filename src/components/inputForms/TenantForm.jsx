@@ -5,6 +5,7 @@ import PhoneField from "./PhoneField";
 import fetchConfig from "../../config/fetch";
 import fetchUrls from "../../constants/fetchUrls";
 import handleChangeFunctions from "../../utils/handleChangeFunctions";
+import validation from "../../utils/validation";
 
 export default function TenantForm(props) {
   const [confirmation, setConfirmation] = useState("");
@@ -37,8 +38,13 @@ export default function TenantForm(props) {
     }
   }, [props.editMode]);
 
-  async function submitTenant(event) {
+  function submitForm(event) {
     event.preventDefault();
+    const validationErrors = [];
+    validation.tenant(formData, validationErrors);
+  }
+
+  async function submitTenant() {
     if (formData.addressId === "Not my tenant") {
       setFormData((oldData) => ({ ...oldData, addressId: "" }));
     }
@@ -104,9 +110,9 @@ export default function TenantForm(props) {
   }
 
   function createConfirmationMessage() {
-    let className = "editWindow--confirmation ";
+    let className = "editWindow--confirmation";
     if (confirmation.success === false) {
-      className += "error";
+      className += " error";
       if (Array.isArray(confirmation.error)) {
         return confirmation.error.map((el, i) => (
           <span key={i} className={className}>
@@ -123,7 +129,7 @@ export default function TenantForm(props) {
 
   return (
     <section>
-      <form onSubmit={submitTenant} className="editWindow--tenantForm">
+      <form onSubmit={submitForm} className="editWindow--tenantForm">
         <label htmlFor="firstName">First Name:</label>
         <input
           onChange={(e) => handleChange(e, setFormData)}

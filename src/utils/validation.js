@@ -2,7 +2,21 @@ import validator from "validator";
 
 const validation = Object.freeze({
   address: (address) => {},
-  tenant: (tenant) => {},
+  tenant: (formData, validationErrors) => {
+    console.log(formData);
+    if (!validator.isDate(formData.birthDate) && formData.birthDate !== "") {
+      validationErrors.push({ error: "Date of birth needs to be a date or empty. (AAAA-MM-JJ)" });
+    }
+    if (!validator.isEmail(formData.email) && formData.email !== "") {
+      validationErrors.push({ error: "Please enter a valid email or leave blank." });
+    }
+    if (!formData.firstName || !formData.firstName.trim()) {
+      validationErrors.push({ error: "Please enter a first name." });
+    }
+    if (!formData.lastName || !formData.lastName.trim()) {
+      validationErrors.push({ error: "Please enter a last name." });
+    }
+  },
   register: (formData, validationErrors) => {
     if (formData.username.length < 6) {
       validationErrors.push({ message: "Username needs to be at least 6 characters." });
