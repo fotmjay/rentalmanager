@@ -18,7 +18,6 @@ export default function Registration(props) {
     if (validationErrors.length > 0) {
       props.setErrorMessages(validationErrors);
     } else {
-      console.log("pinged");
       register();
     }
   }
@@ -26,12 +25,10 @@ export default function Registration(props) {
   async function register() {
     try {
       const response = await fetch(fetchUrls.register, fetchConfig.postRequest(formData));
-      const register = await response.json(); // parses JSON response into native JavaScript objects
-
+      const register = await response.json();
       if (register.success === true) {
         localStorage.setItem("token", register.token);
         props.setErrorMessages([]);
-        // props.setLoggedIn(register.token);
         navigate("/dashboard");
       } else {
         localStorage.removeItem("token");

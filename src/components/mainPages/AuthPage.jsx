@@ -10,15 +10,13 @@ export default function AuthPage(props) {
   const navigate = useNavigate();
 
   function toggleRegisterForm() {
-    setRegisterForm((toggle) => {
-      if (toggle) {
-        navigate("/login");
-      } else {
-        navigate("/register");
-      }
-      props.setErrorMessages([]);
-      return !toggle;
-    });
+    if (registerForm) {
+      navigate("/login");
+    } else {
+      navigate("/register");
+    }
+    props.setErrorMessages([]);
+    setRegisterForm((toggle) => !toggle);
   }
 
   function toggleButtonElement() {

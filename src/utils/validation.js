@@ -18,7 +18,15 @@ const validation = Object.freeze({
     }
     return validationErrors;
   },
-  login: (user) => {},
+  login: (formData, validationErrors) => {
+    if (formData.username.length < 6) {
+      validationErrors.push({ message: "Username is at least 6 characters." });
+    }
+    if (formData.password.length < 8) {
+      validationErrors.push({ message: "Password is at least 8 characters." });
+    }
+    return validationErrors;
+  },
 });
 
 export default validation;

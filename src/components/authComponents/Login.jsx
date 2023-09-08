@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import fetchConfig from "../../config/fetch";
 import fetchUrls from "../../constants/fetchUrls";
+import validation from "../../utils/validation";
 import handleChangeFunctions from "../../utils/handleChangeFunctions";
 
 export default function Login(props) {
@@ -12,7 +13,13 @@ export default function Login(props) {
 
   async function submitForm(event) {
     event.preventDefault();
-    login();
+    const validationErrors = [];
+    validation.login(formData, validationErrors);
+    if (validationErrors.length > 0) {
+      props.setErrorMessages(validationErrors);
+    } else {
+      login();
+    }
   }
 
   async function login() {
