@@ -186,7 +186,9 @@ export default function AddressForm(props) {
         <ul className="addressForm--selectedTenantList">
           {formData.tenantList.map((tenant) => (
             <li key={tenant._id} data-id={tenant._id}>
-              {`${tenant.firstName} ${tenant.lastName} ${tenant.birthDate.toString().slice(0, 10)}`}
+              {`${tenant.firstName} ${tenant.lastName} ${
+                tenant.birthDate ? tenant.birthDate.toString().slice(0, 10) : ""
+              }`}
               <span onClick={() => removeFromList(tenant._id)} className="edit addressForm--removeSelectedTenant">
                 remove
               </span>

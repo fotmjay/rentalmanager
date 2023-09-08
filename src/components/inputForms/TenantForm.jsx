@@ -42,24 +42,20 @@ export default function TenantForm(props) {
     if (formData.addressId === "Not my tenant") {
       setFormData((oldData) => ({ ...oldData, addressId: "" }));
     }
+    let response;
     if (props.editMode) {
-      const response = await fetch(
+      response = await fetch(
         `${fetchUrls.editTenant}${props.tenant._id}`,
         fetchConfig.updateRequest(formData, props.token)
       );
-      const res = await response.json();
-      if (res.refreshToken) {
-        localStorage.setItem("token", res.refreshToken);
-      }
-      setConfirmation(res.message || res.error);
     } else {
-      const response = await fetch(fetchUrls.createTenant, fetchConfig.postRequest(formData, props.token));
-      const res = await response.json();
-      if (res.refreshToken) {
-        localStorage.setItem("token", res.refreshToken);
-      }
-      setConfirmation(res);
+      response = await fetch(fetchUrls.createTenant, fetchConfig.postRequest(formData, props.token));
     }
+    const res = await response.json();
+    if (res.refreshToken) {
+      localStorage.setItem("token", res.refreshToken);
+    }
+    setConfirmation(res);
   }
 
   function generateAddressList() {
