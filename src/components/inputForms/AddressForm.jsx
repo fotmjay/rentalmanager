@@ -41,32 +41,31 @@ export default function AddressForm(props) {
   async function submitAddress(event) {
     event.preventDefault();
     let alerts = [];
-    console.log(formData.alerts);
     if (formData.alerts.length > 0) {
       formData.alerts.forEach((alert) => {
         const title = alert.title ? alert.title.trim() : "";
         const desc = alert.desc ? alert.desc.trim() : "";
         if (title || desc) {
-          console.log("pushed", title, desc);
           alerts.push({ title: title, desc: desc });
         }
       });
     }
     const addressData = { ...formData, alerts: alerts };
+    let response;
     if (props.editMode) {
-      const response = await fetch(
+      response = await fetch(
         `${fetchUrls.editAddress}${props.address._id}`,
         fetchConfig.updateRequest(addressData, props.token)
       );
-      const res = await response.json();
-      localStorage.setItem("token", res.refreshToken);
-      setConfirmation(res.message || res.error);
     } else {
-      const response = await fetch(fetchUrls.createAddress, fetchConfig.postRequest(addressData, props.token));
-      const res = await response.json();
-      localStorage.setItem("token", res.refreshToken);
-      setConfirmation(res.message || res.error);
+      response = await fetch(fetchUrls.createAddress, fetchConfig.postRequest(addressData, props.token));
     }
+    const res = await response.json();
+    if (res.refreshToken) {
+      localStorage.setItem("token", res.refreshToken);
+    }
+    console.log(res);
+    setConfirmation(res);
   }
 
   function generateTenantList() {
@@ -84,7 +83,7 @@ export default function AddressForm(props) {
   function manageAlertFields(ope, event) {
     if (ope === "ADD") {
       if (formData.alerts.length > 2) {
-        setConfirmation("Max amount of alerts reached");
+        setConfirmation({ success: false, error: "Max number of alerts reached." });
       } else {
         setFormData((oldData) => {
           return { ...oldData, alerts: [...oldData.alerts, { title: "", desc: "" }] };
@@ -95,6 +94,7 @@ export default function AddressForm(props) {
         const filteredAlerts = oldData.alerts.filter((_, index) => index !== Number(event.target.dataset.index));
         return { ...oldData, alerts: filteredAlerts };
       });
+      setConfirmation({});
     }
   }
 
@@ -125,6 +125,24 @@ export default function AddressForm(props) {
       />
     ));
     return alertElements;
+  }
+
+  function createConfirmationMessage() {
+    let className = "editWindow--confirmation ";
+    if (confirmation.success === false) {
+      className += "error";
+      if (Array.isArray(confirmation.error)) {
+        return confirmation.error.map((el, i) => (
+          <span key={i} className={className}>
+            {el.error}
+          </span>
+        ));
+      } else {
+        return <span className={className}>{confirmation.error}</span>;
+      }
+    } else {
+      return <span className={className}>{confirmation.message}</span>;
+    }
   }
   return (
     <section>
@@ -205,7 +223,7 @@ export default function AddressForm(props) {
           {props.editMode ? "Update" : "Add"}
         </button>
       </form>
-      {confirmation && confirmation}
+      {createConfirmationMessage()}
     </section>
   );
 }

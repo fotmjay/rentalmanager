@@ -73,7 +73,7 @@ export default function TenantForm(props) {
   function managePhoneFields(ope, event) {
     if (ope === "ADD") {
       if (formData.phoneNumbers.length > 2) {
-        setConfirmation("Max amount of numbers reached");
+        setConfirmation({ success: false, error: "Max amount of numbers reached" });
       } else {
         setFormData((oldData) => {
           return { ...oldData, phoneNumbers: [...oldData.phoneNumbers, { id: nanoid(), number: "", type: "home" }] };
@@ -84,6 +84,7 @@ export default function TenantForm(props) {
         const phones = oldData.phoneNumbers.filter((phone) => phone.id !== event.target.dataset.id);
         return { ...oldData, phoneNumbers: phones };
       });
+      setConfirmation({});
     }
   }
 
