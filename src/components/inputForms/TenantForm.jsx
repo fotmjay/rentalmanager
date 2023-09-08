@@ -149,7 +149,7 @@ export default function TenantForm(props) {
         <input
           onChange={(e) => handleChange(e, setFormData)}
           value={formData.birthDate}
-          type="text"
+          type="number"
           name="birthDate"
           id="birthDate"
           placeholder="AAAA-MM-DD"
