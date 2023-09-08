@@ -40,17 +40,23 @@ export default function AddressForm(props) {
 
   async function submitAddress(event) {
     event.preventDefault();
-    let alerts;
-    if (!formData.alerts[0].title && !formData.alerts[0].desc) {
-      alerts = [];
-    } else {
-      alerts = formData.alerts;
+    let alerts = [];
+    console.log(formData.alerts);
+    if (formData.alerts.length > 0) {
+      formData.alerts.forEach((alert) => {
+        const title = alert.title ? alert.title.trim() : "";
+        const desc = alert.desc ? alert.desc.trim() : "";
+        if (title || desc) {
+          console.log("pushed", title, desc);
+          alerts.push({ title: title, desc: desc });
+        }
+      });
     }
     const addressData = { ...formData, alerts: alerts };
     if (props.editMode) {
       const response = await fetch(
         `${fetchUrls.editAddress}${props.address._id}`,
-        fetchConfig.updateRequest(formData, props.token)
+        fetchConfig.updateRequest(addressData, props.token)
       );
       const res = await response.json();
       localStorage.setItem("token", res.refreshToken);
