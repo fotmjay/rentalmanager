@@ -279,6 +279,10 @@ div.specificWindow--container {
   font-family: Tektur, sans-serif;
 }
 
+.appList--close--button {
+  width: 50px;
+}
+
 .appList--refresh--button:hover,
 .appList--edit--button:hover,
 .appList--close--button:hover {
