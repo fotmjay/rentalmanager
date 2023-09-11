@@ -42,6 +42,11 @@ export default function TenantForm(props) {
     event.preventDefault();
     const validationErrors = [];
     validation.tenant(formData, validationErrors);
+    if (validationErrors.length > 0) {
+      setConfirmation({ success: false, error: validationErrors });
+    } else {
+      submitTenant();
+    }
   }
 
   async function submitTenant() {

@@ -4,17 +4,26 @@ const validation = Object.freeze({
   address: (address) => {},
   tenant: (formData, validationErrors) => {
     console.log(formData);
-    if (!validator.isDate(formData.birthDate) && formData.birthDate !== "") {
+    if (!/^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/.test(formData.birthDate) && formData.birthDate !== "") {
       validationErrors.push({ error: "Date of birth needs to be a date or empty. (AAAA-MM-JJ)" });
     }
     if (!validator.isEmail(formData.email) && formData.email !== "") {
       validationErrors.push({ error: "Please enter a valid email or leave blank." });
     }
-    if (!formData.firstName || !formData.firstName.trim()) {
+    if (!formData.firstName || !formData.firstName.trim() === "") {
       validationErrors.push({ error: "Please enter a first name." });
     }
-    if (!formData.lastName || !formData.lastName.trim()) {
+    if (!formData.lastName || !formData.lastName.trim() === "") {
       validationErrors.push({ error: "Please enter a last name." });
+    }
+    const wrongNumber = formData.phoneNumbers.some((phone) => {
+      const number = phone.number.replace(/[^0-9]/g, "");
+      if (number.toString().length !== 10) {
+        return true;
+      }
+    });
+    if (wrongNumber) {
+      validationErrors.push({ error: "Please enter a valid phone number: 000-000-0000." });
     }
   },
   register: (formData, validationErrors) => {
