@@ -4,9 +4,9 @@ export default function Alert(props) {
     <li className="specificWindow--alerts" key={i}>
       <span>
         {alert.title}
-        {alert.data && ":"}
-      </span>{" "}
-      {alert.data}
+        {alert.title && alert.desc && ": "}
+        {alert.desc}
+      </span>
     </li>
   ));
 }
