@@ -1,11 +1,18 @@
+let useUrl;
+if (process.env.NODE_ENV === "development") {
+  useUrl = "http://localhost:3000";
+} else {
+  useUrl = "https://rentalbackend.onrender.com";
+}
+
 const fetchUrls = {
-  register: "http://localhost:3000/register",
-  login: "http://localhost:3000/login",
-  getData: "http://localhost:3000/api",
-  createTenant: "http://localhost:3000/api/createTenant",
-  createAddress: "http://localhost:3000/api/createAddress",
-  editTenant: "http://localhost:3000/api/edit/tenant/",
-  editAddress: "http://localhost:3000/api/edit/address/",
+  register: `${useUrl}/register`,
+  login: `${useUrl}/login`,
+  getData: `${useUrl}/api`,
+  createTenant: `${useUrl}/api/createTenant`,
+  createAddress: `${useUrl}/api/createAddress`,
+  editTenant: `${useUrl}/api/edit/tenant/`,
+  editAddress: `${useUrl}/api/edit/address/`,
 };
 
 export default fetchUrls;

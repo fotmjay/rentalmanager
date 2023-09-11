@@ -1,36 +1,42 @@
 const fetchConfig = {
   dataRequest: function (token) {
-    return {
-      headers: { "Content-Type": "application/json", authorization: token },
+    let request = {
+      headers: { "Content-Type": "application/json", authorization: token || "" },
       method: "GET",
       mode: "cors",
-      credentials: "same-origin",
-      proxy: "http://localhost:3000",
     };
+    if (process.env.NODE_ENV === "development") {
+      request = { ...request, credentials: "same-origin", proxy: "http://localhost:3000" };
+    }
+    return request;
   },
   postRequest: function (formData, token) {
-    return {
-      method: "POST",
+    let request = {
       headers: { "Content-Type": "application/json", authorization: token || "" },
+      method: "POST",
       mode: "cors",
-      credentials: "same-origin",
-      proxy: "http://localhost:3000",
       body: JSON.stringify({
         data: formData,
       }),
     };
+    if (process.env.NODE_ENV === "development") {
+      request = { ...request, credentials: "same-origin", proxy: "http://localhost:3000" };
+    }
+    return request;
   },
   updateRequest: function (formData, token) {
-    return {
-      method: "PUT",
+    let request = {
       headers: { "Content-Type": "application/json", authorization: token || "" },
+      method: "PUT",
       mode: "cors",
-      credentials: "same-origin",
-      proxy: "http://localhost:3000",
       body: JSON.stringify({
         data: formData,
       }),
     };
+    if (process.env.NODE_ENV === "development") {
+      request = { ...request, credentials: "same-origin", proxy: "http://localhost:3000" };
+    }
+    return request;
   },
 };
 
