@@ -13,7 +13,7 @@ export default function CreateWindow(props) {
   return (
     <div className="specificWindow--container">
       <h2 className="specificWindow--title--text edit">
-        Add
+        Create
         <button onClick={props.closeWindow} className="appList--close--button" type="button">
           ✘
         </button>

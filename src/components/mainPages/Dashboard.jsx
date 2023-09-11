@@ -118,7 +118,7 @@ export default function Dashboard(props) {
         </button>
         <div className="appList--button--container">
           <button type="button" className="appList--edit--button" onClick={(e) => openCreateWindow(e)}>
-            Add
+            Create
           </button>
           <button type="button" className="appList--logOut--button login--toggleRegisterButton" onClick={logOut}>
             Log Out
