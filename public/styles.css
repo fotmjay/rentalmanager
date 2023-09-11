@@ -152,12 +152,13 @@ div.specificWindow--container {
   padding: 1px 10px;
 }
 
-.specificWindow--title {
+.specificWindow--title--text {
   font-weight: bold;
   padding: 25px;
   padding-bottom: 0;
   font-size: 2.5rem;
   display: flex;
+  justify-content: space-between;
 }
 
 .specificWindow--headline {
@@ -265,7 +266,8 @@ div.specificWindow--container {
 
 .appList--edit--button,
 .appList--refresh--button,
-.appList--logOut--button {
+.appList--logOut--button,
+.appList--close--button {
   margin: 0;
   width: fit-content;
   font-size: 14px;
@@ -276,9 +278,15 @@ div.specificWindow--container {
   color: #f5f5f5;
   font-family: Tektur, sans-serif;
 }
+
 .appList--refresh--button:hover,
-.appList--edit--button:hover {
+.appList--edit--button:hover,
+.appList--close--button:hover {
   background-color: rgba(0, 23, 76, 0.5);
+}
+
+.appList--edit--button.edit {
+  margin-right: auto;
 }
 
 .appList--logOut--button {

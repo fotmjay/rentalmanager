@@ -13,52 +13,35 @@ export default function SpecificWindow(props) {
 
   const { tenants, address, category, closeWindow, token, tenantList, addList } = props;
 
-  // When specific window is open, set event listener to body
-  // Leads to function that confirms:  Specific window clicked === do not close
-  // anywhere else:  close
-  useEffect(() => {
-    function close(e) {
-      props.closeWindow(e);
-    }
-
-    document.querySelector("body").addEventListener("click", close);
-
-    // cleanup this component
-    return () => {
-      document.querySelector("body").removeEventListener("click", close);
-    };
-  }, []);
-
   function editButton() {
     setToggleEdit((prev) => !prev);
   }
 
   return (
     <div className="specificWindow--container">
-      <h2 className="specificWindow--title">
-        Details
-        <button onClick={editButton} className="appList--edit--button" type="button">
-          {toggleEdit ? "Go back" : "Edit"}
-        </button>
-      </h2>
+      <div className="specificWindow--title">
+        <h2 className="specificWindow--title--text">
+          Details
+          <button onClick={editButton} className="appList--edit--button edit" type="button">
+            {toggleEdit ? "Go back" : "Edit"}
+          </button>
+          <button onClick={props.closeWindow} className="appList--close--button" type="button">
+            ✘
+          </button>
+        </h2>
+      </div>
+
       {toggleEdit ? (
         <SpecificWindowEdit
           token={token}
           tenants={tenants}
           address={address}
           category={category}
-          closeWindow={closeWindow}
           tenantList={tenantList}
           addressList={addList}
         />
       ) : (
-        <SpecificWindowDetails
-          token={token}
-          tenants={tenants}
-          address={address}
-          category={category}
-          closeWindow={closeWindow}
-        />
+        <SpecificWindowDetails token={token} tenants={tenants} address={address} category={category} />
       )}
     </div>
   );

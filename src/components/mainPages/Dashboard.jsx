@@ -71,16 +71,9 @@ export default function Dashboard(props) {
     setCreateWindow({ toggle: true });
   }
 
-  function closeWindow(event) {
-    if (
-      !event.target.className.includes("specific") &&
-      !event.target.parentNode.className.includes("specific") &&
-      !event.target.className.includes("edit") &&
-      !event.target.parentNode.className.includes("edit")
-    ) {
-      setSpecWindow({ toggle: false, address: "", tenants: "", category: "" });
-      setCreateWindow({ toggle: false });
-    }
+  function closeWindow() {
+    setSpecWindow({ toggle: false, address: "", tenants: "", category: "" });
+    setCreateWindow({ toggle: false });
   }
 
   function sortTenant() {

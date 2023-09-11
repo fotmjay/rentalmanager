@@ -7,22 +7,6 @@ import Notes from "./specificWindowComponents/Notes";
 import Contact from "./specificWindowComponents/Contact";
 
 export default function SpecificWindowDetails(props) {
-  // When specific window is open, set event listener to body
-  // Leads to function that confirms:  Specific window clicked === do not close
-  // anywhere else:  close
-  useEffect(() => {
-    function close(e) {
-      props.closeWindow(e);
-    }
-
-    document.querySelector("body").addEventListener("click", close);
-
-    // cleanup this component
-    return () => {
-      document.querySelector("body").removeEventListener("click", close);
-    };
-  }, []);
-
   const addressInfo = props.address;
   const tenantsInfo = props.tenants;
 
