@@ -46,37 +46,41 @@ export default function AddressForm(props) {
     if (validationErrors.length > 0) {
       setConfirmation({ success: false, error: validationErrors });
     } else {
-      // submitAddress();
-      console.log("submitted");
+      submitAddress();
     }
   }
 
   async function submitAddress() {
-    // let alerts = [];
-    // if (formData.alerts.length > 0) {
-    //   formData.alerts.forEach((alert) => {
-    //     const title = alert.title ? alert.title.trim() : "";
-    //     const desc = alert.desc ? alert.desc.trim() : "";
-    //     if (title || desc) {
-    //       alerts.push({ title: title, desc: desc });
-    //     }
-    //   });
-    // }
-    // const addressData = { ...formData, alerts: alerts };
-    // let response;
-    // if (props.editMode) {
-    //   response = await fetch(
-    //     `${fetchUrls.editAddress}${props.address._id}`,
-    //     fetchConfig.updateRequest(addressData, props.token)
-    //   );
-    // } else {
-    //   response = await fetch(fetchUrls.createAddress, fetchConfig.postRequest(addressData, props.token));
-    // }
-    // const res = await response.json();
-    // if (res.refreshToken) {
-    //   localStorage.setItem("token", res.refreshToken);
-    // }
-    // setConfirmation(res);
+    let alerts = [];
+    if (formData.alerts.length > 0) {
+      formData.alerts.forEach((alert) => {
+        const title = alert.title ? alert.title.trim() : "";
+        const desc = alert.desc ? alert.desc.trim() : "";
+        if (title || desc) {
+          alerts.push({ title: title, desc: desc });
+        }
+      });
+    }
+    let addressData = { ...formData, alerts: alerts };
+    let tenantList = [];
+    if (selectedTenant && !formData.tenantList.length) {
+      tenantList.push(selectedTenant);
+      addressData = { ...addressData, tenantList: tenantList };
+    }
+    let response;
+    if (props.editMode) {
+      response = await fetch(
+        `${fetchUrls.editAddress}${props.address._id}`,
+        fetchConfig.updateRequest(addressData, props.token)
+      );
+    } else {
+      response = await fetch(fetchUrls.createAddress, fetchConfig.postRequest(addressData, props.token));
+    }
+    const res = await response.json();
+    if (res.refreshToken) {
+      localStorage.setItem("token", res.refreshToken);
+    }
+    setConfirmation(res);
   }
 
   function generateTenantList() {

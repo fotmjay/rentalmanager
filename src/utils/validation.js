@@ -2,11 +2,10 @@ import validator from "validator";
 
 const validation = Object.freeze({
   address: (formData, validationErrors) => {
-    console.log(formData);
-    if (formData.streetNumber.trim() === "") {
+    if (formData.streetNumber.toString().trim() === "") {
       validationErrors.push({ error: "Please enter a street number." });
     }
-    if (formData.appNumber !== "" && parseInt(formData.appNumber) !== formData.appNumber) {
+    if (formData.appNumber !== "" && parseInt(formData.appNumber).toString() !== formData.appNumber.toString()) {
       validationErrors.push({ error: "Rent price needs to be a number or left blank." });
     }
     if (formData.streetName.trim() === "") {
