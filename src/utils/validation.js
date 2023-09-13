@@ -1,11 +1,22 @@
 import validator from "validator";
 
 const validation = Object.freeze({
-  address: (address) => {},
-  tenant: (formData, validationErrors) => {
+  address: (formData, validationErrors) => {
     console.log(formData);
+    if (formData.streetNumber.trim() === "") {
+      validationErrors.push({ error: "Please enter a street number." });
+    }
+    if (formData.appNumber !== "" && parseInt(formData.appNumber) !== formData.appNumber) {
+      validationErrors.push({ error: "Rent price needs to be a number or left blank." });
+    }
+    if (formData.streetName.trim() === "") {
+      validationErrors.push({ error: "Please enter a street name." });
+    }
+  },
+
+  tenant: (formData, validationErrors) => {
     if (!/^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/.test(formData.birthDate) && formData.birthDate !== "") {
-      validationErrors.push({ error: "Date of birth needs to be a date or empty. (AAAA-MM-JJ)" });
+      validationErrors.push({ error: "Date of birth needs to be a date or left blank. (AAAA-MM-JJ)" });
     }
     if (!validator.isEmail(formData.email) && formData.email !== "") {
       validationErrors.push({ error: "Please enter a valid email or leave blank." });

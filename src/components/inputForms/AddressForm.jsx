@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import AlertField from "./AlertField";
 import fetchConfig from "../../config/fetch";
 import fetchUrls from "../../constants/fetchUrls";
+import validation from "../../utils/validation";
 import handleChangeFunctions from "../../utils/handleChangeFunctions";
 
 export default function AddressForm(props) {
@@ -38,34 +39,44 @@ export default function AddressForm(props) {
     }
   }, [props.editMode]);
 
-  async function submitAddress(event) {
+  function submitForm(event) {
     event.preventDefault();
-    let alerts = [];
-    if (formData.alerts.length > 0) {
-      formData.alerts.forEach((alert) => {
-        const title = alert.title ? alert.title.trim() : "";
-        const desc = alert.desc ? alert.desc.trim() : "";
-        if (title || desc) {
-          alerts.push({ title: title, desc: desc });
-        }
-      });
-    }
-    const addressData = { ...formData, alerts: alerts };
-    let response;
-    if (props.editMode) {
-      response = await fetch(
-        `${fetchUrls.editAddress}${props.address._id}`,
-        fetchConfig.updateRequest(addressData, props.token)
-      );
+    const validationErrors = [];
+    validation.address(formData, validationErrors);
+    if (validationErrors.length > 0) {
+      setConfirmation({ success: false, error: validationErrors });
     } else {
-      response = await fetch(fetchUrls.createAddress, fetchConfig.postRequest(addressData, props.token));
+      // submitAddress();
+      console.log("submitted");
     }
-    const res = await response.json();
-    if (res.refreshToken) {
-      localStorage.setItem("token", res.refreshToken);
-    }
-    console.log(res);
-    setConfirmation(res);
+  }
+
+  async function submitAddress() {
+    // let alerts = [];
+    // if (formData.alerts.length > 0) {
+    //   formData.alerts.forEach((alert) => {
+    //     const title = alert.title ? alert.title.trim() : "";
+    //     const desc = alert.desc ? alert.desc.trim() : "";
+    //     if (title || desc) {
+    //       alerts.push({ title: title, desc: desc });
+    //     }
+    //   });
+    // }
+    // const addressData = { ...formData, alerts: alerts };
+    // let response;
+    // if (props.editMode) {
+    //   response = await fetch(
+    //     `${fetchUrls.editAddress}${props.address._id}`,
+    //     fetchConfig.updateRequest(addressData, props.token)
+    //   );
+    // } else {
+    //   response = await fetch(fetchUrls.createAddress, fetchConfig.postRequest(addressData, props.token));
+    // }
+    // const res = await response.json();
+    // if (res.refreshToken) {
+    //   localStorage.setItem("token", res.refreshToken);
+    // }
+    // setConfirmation(res);
   }
 
   function generateTenantList() {
@@ -146,7 +157,7 @@ export default function AddressForm(props) {
   }
   return (
     <section>
-      <form onSubmit={submitAddress} className="editWindow--tenantForm">
+      <form onSubmit={submitForm} className="editWindow--tenantForm">
         <label htmlFor="appNumber">App number:</label>
         <input
           onChange={(e) => handleChange(e, setFormData)}
