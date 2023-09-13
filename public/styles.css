@@ -67,6 +67,13 @@ body {
   background-color: #f5f5f5;
 }
 
+@media screen and (max-width: 610px) {
+  .login--title.absolute {
+    display: block;
+    position: relative;
+  }
+}
+
 .login--paragraph {
   font-size: 1.5rem;
   padding-bottom: 15px;
@@ -230,7 +237,7 @@ div.specificWindow--container {
 .appList--section {
   margin-top: 5%;
   width: 100%;
-  max-height: 85%;
+  max-height: 80%;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
@@ -262,6 +269,35 @@ div.specificWindow--container {
 
 .appList--header--container > * {
   width: 220px;
+}
+
+@media screen and (max-width: 600px) {
+  .appList--header--container {
+    display: block;
+  }
+  .appList--button--container {
+    display: flex;
+    justify-content: flex-start;
+    gap: 5px;
+  }
+
+  .appList--header--container > div {
+    padding: 5px 0;
+  }
+
+  .appList--container {
+    width: 100%;
+    margin: 75px 0 50px 0;
+    padding: 5px;
+  }
+  body {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
+  .first--container {
+    margin: 75px 50px;
+  }
 }
 
 .appList--edit--button,
@@ -403,6 +439,24 @@ input:checked + .slider:before {
   border: 1px solid black;
   border-radius: 5px;
   position: relative;
+}
+
+@media screen and (min-width: 1000px) {
+  .appCard--container {
+    flex-basis: 15%;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .appCard--container {
+    flex-basis: 45%;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .appCard--container {
+    flex-basis: 60%;
+  }
 }
 
 .appCard--container > * {
